@@ -80,7 +80,12 @@
         "qfile": "cpp",
         "qdir": "cpp",
         "qdebug": "cpp",
-        "qapplication": "cpp"
+        "qapplication": "cpp",
+        "qdatastream": "cpp",
+        "qvboxlayout": "cpp",
+        "qdateedit": "cpp",
+        "qscrollarea": "cpp",
+        "qtablewidgetitem": "cpp"
     },
     
     "cmake.configureSettings": {

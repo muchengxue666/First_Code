@@ -169,13 +169,15 @@ void DataManager::addTicket(const Ticket& ticket) {
         nextTicketId = ticket.getTicketId() + 1;
     }
     
-    // Update schedule box office
+    // Update schedule box office AND mark seat as occupied
     Schedule* schedule = findSchedule(ticket.getScheduleId());
     if (schedule) {
         Movie* movie = findMovie(schedule->getMovieId());
         if (movie) {
             schedule->addBoxOffice(movie->getPrice());
         }
+        // 关键修复：标记座位为已售
+        schedule->bookSeat(ticket.getRow(), ticket.getCol());
     }
     saveAllData();
 }

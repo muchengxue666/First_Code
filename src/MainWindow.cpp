@@ -45,6 +45,7 @@ void MainWindow::setupUI() {
     createBoxOfficePage();
     createMovieListPage();
     createSeatSelectionPage();
+    createMyTicketsPage();  // 添加我的票务页面
 }
 
 // 角色选择页面
@@ -280,9 +281,95 @@ void MainWindow::createCustomerDashboard() {
     layout->addWidget(logoutBtn);
     
     connect(movieListBtn, &QPushButton::clicked, this, &MainWindow::showMovieList);
+    connect(myTicketsBtn, &QPushButton::clicked, this, &MainWindow::showMyTickets);  // 连接我的票务
     connect(logoutBtn, &QPushButton::clicked, this, &MainWindow::logout);
     
     stackedWidget->addWidget(page);
+}
+
+void MainWindow::createMyTicketsPage() {
+    QWidget *page = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout(page);
+    
+    QLabel *titleLabel = new QLabel("我的票务");
+    titleLabel->setAlignment(Qt::AlignCenter);
+    QFont titleFont = titleLabel->font();
+    titleFont.setPointSize(16);
+    titleLabel->setFont(titleFont);
+    
+    // 票务表格
+    myTicketsTable = new QTableWidget;
+    myTicketsTable->setColumnCount(6);
+    myTicketsTable->setHorizontalHeaderLabels({"电影名称", "放映厅", "放映时间", "座位", "购票时间", "操作"});
+    
+    QPushButton *backBtn = new QPushButton("返回");
+    
+    layout->addWidget(titleLabel);
+    layout->addWidget(myTicketsTable);
+    layout->addWidget(backBtn);
+    
+    connect(backBtn, &QPushButton::clicked, this, &MainWindow::showCustomerDashboard);
+    
+    stackedWidget->addWidget(page);
+}
+
+// 添加显示我的票务方法
+void MainWindow::showMyTickets() {
+    refreshMyTickets();
+    stackedWidget->setCurrentIndex(10);  // 假设这是第10个页面
+}
+
+// 添加刷新我的票务方法
+void MainWindow::refreshMyTickets() {
+    if (!currentUser) {
+        QMessageBox::warning(this, "错误", "请先登录");
+        return;
+    }
+    
+    auto userTickets = DataManager::getInstance().getTicketsByUser(currentUser->getUsername());
+    myTicketsTable->setRowCount(userTickets.size());
+    
+    for (int i = 0; i < userTickets.size(); ++i) {
+        const auto& ticket = userTickets[i];
+        Schedule* schedule = DataManager::getInstance().findSchedule(ticket.getScheduleId());
+        
+        if (schedule) {
+            Movie* movie = DataManager::getInstance().findMovie(schedule->getMovieId());
+            CinemaHall* hall = DataManager::getInstance().findHall(schedule->getHallId());
+            
+            if (movie && hall) {
+                myTicketsTable->setItem(i, 0, new QTableWidgetItem(movie->getTitle()));
+                myTicketsTable->setItem(i, 1, new QTableWidgetItem(hall->getName()));
+                myTicketsTable->setItem(i, 2, new QTableWidgetItem(schedule->getShowTime().toString("yyyy-MM-dd hh:mm")));
+                myTicketsTable->setItem(i, 3, new QTableWidgetItem(QString("第%1排 第%2座").arg(ticket.getRow() + 1).arg(ticket.getCol() + 1)));
+                myTicketsTable->setItem(i, 4, new QTableWidgetItem(ticket.getPurchaseTime().toString("yyyy-MM-dd hh:mm")));
+                
+                QPushButton *cancelBtn = new QPushButton("退票");
+                cancelBtn->setProperty("ticketId", ticket.getTicketId());
+                connect(cancelBtn, &QPushButton::clicked, this, &MainWindow::cancelTicket);
+                myTicketsTable->setCellWidget(i, 5, cancelBtn);
+            }
+        }
+    }
+}
+
+// 完善退票方法
+void MainWindow::cancelTicket() {
+    QPushButton* cancelBtn = qobject_cast<QPushButton*>(sender());
+    if (!cancelBtn) return;
+    
+    int ticketId = cancelBtn->property("ticketId").toInt();
+    
+    QMessageBox::StandardButton reply = QMessageBox::question(
+        this, "确认退票", "确定要退票吗？",
+        QMessageBox::Yes | QMessageBox::No
+    );
+    
+    if (reply == QMessageBox::Yes) {
+        DataManager::getInstance().removeTicket(ticketId);
+        refreshMyTickets();
+        QMessageBox::information(this, "退票成功", "退票成功！");
+    }
 }
 
 // 排片管理页面
@@ -465,8 +552,16 @@ void MainWindow::onSeatSelected(bool checked) {
     int row = seatBtn->property("row").toInt();
     int col = seatBtn->property("col").toInt();
     
-    if (checked) {
-        seatInfoLabel->setText(QString("已选择: 第%1排 第%2座").arg(row + 1).arg(col + 1));
+    // 统计选中的座位数量
+    int selectedCount = 0;
+    for (QPushButton* btn : seatButtons) {
+        if (btn->isChecked()) {
+            selectedCount++;
+        }
+    }
+    
+    if (selectedCount > 0) {
+        seatInfoLabel->setText(QString("已选择 %1 个座位").arg(selectedCount));
     } else {
         seatInfoLabel->setText("请选择座位");
     }
@@ -775,22 +870,22 @@ void MainWindow::purchaseTicket() {
         return;
     }
     
-    // 查找选中的座位
-    int selectedRow = -1, selectedCol = -1;
+    // 查找所有选中的座位
+    QList<QPair<int, int>> selectedSeats;
     for (QPushButton* seatBtn : seatButtons) {
         if (seatBtn->isChecked()) {
-            selectedRow = seatBtn->property("row").toInt();
-            selectedCol = seatBtn->property("col").toInt();
-            break;
+            int row = seatBtn->property("row").toInt();
+            int col = seatBtn->property("col").toInt();
+            selectedSeats.append(qMakePair(row, col));
         }
     }
     
-    if (selectedRow == -1 || selectedCol == -1) {
+    if (selectedSeats.isEmpty()) {
         QMessageBox::warning(this, "购票失败", "请先选择座位");
         return;
     }
     
-    // 检查座位是否可用
+    // 检查所有座位是否可用
     Schedule* schedule = DataManager::getInstance().findSchedule(currentScheduleId);
     if (!schedule) {
         QMessageBox::warning(this, "购票失败", "排片信息不存在");
@@ -798,10 +893,14 @@ void MainWindow::purchaseTicket() {
     }
     
     const auto& seats = schedule->getSeats();
-    if (selectedRow >= seats.size() || selectedCol >= seats[selectedRow].size() || 
-        seats[selectedRow][selectedCol]) {
-        QMessageBox::warning(this, "购票失败", "该座位已被购买");
-        return;
+    for (const auto& seat : selectedSeats) {
+        int row = seat.first;
+        int col = seat.second;
+        if (row >= seats.size() || col >= seats[row].size() || seats[row][col]) {
+            QMessageBox::warning(this, "购票失败", 
+                QString("座位第%1排第%2座已被购买").arg(row + 1).arg(col + 1));
+            return;
+        }
     }
     
     // 创建票务
@@ -811,18 +910,33 @@ void MainWindow::purchaseTicket() {
         return;
     }
     
-    Ticket ticket(DataManager::getInstance().getNextTicketId(), 
-                 username, currentScheduleId, selectedRow, selectedCol, QDateTime::currentDateTime());
+    // 为每个选中的座位创建票务
+    for (const auto& seat : selectedSeats) {
+        int row = seat.first;
+        int col = seat.second;
+        
+        Ticket ticket(DataManager::getInstance().getNextTicketId(), 
+                     username, currentScheduleId, row, col, QDateTime::currentDateTime());
+        
+        DataManager::getInstance().addTicket(ticket);
+    }
     
-    DataManager::getInstance().addTicket(ticket);
+    // 计算总价
+    Movie* movie = DataManager::getInstance().findMovie(schedule->getMovieId());
+    double totalPrice = 0.0;
+    if (movie) {
+        totalPrice = movie->getPrice() * selectedSeats.size();
+    }
+    
+    // 构建座位信息字符串
+    QString seatInfo;
+    for (const auto& seat : selectedSeats) {
+        if (!seatInfo.isEmpty()) seatInfo += ", ";
+        seatInfo += QString("第%1排第%2座").arg(seat.first + 1).arg(seat.second + 1);
+    }
     
     QMessageBox::information(this, "购票成功", 
-        QString("购票成功！\\n座位: 第%1排 第%2座\\n请按时观影").arg(selectedRow + 1).arg(selectedCol + 1));
+        QString("购票成功！\n座位: %1\n总价: %2元\n请按时观影").arg(seatInfo).arg(totalPrice));
     
     showMovieList();
-}
-
-void MainWindow::cancelTicket() {
-    // 退票逻辑实现
-    // 从DataManager中移除Ticket并更新座位状态
 }

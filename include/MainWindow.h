@@ -49,6 +49,7 @@ private slots:
     void cancelTicket();
     void refreshCustomerMovieList();
     void onSeatSelected(bool checked);
+    void showMyTickets();  // 添加我的票务显示
 
 private:
     void setupUI();
@@ -61,6 +62,8 @@ private:
     void createBoxOfficePage();
     void createMovieListPage();
     void createSeatSelectionPage();
+    void createMyTicketsPage();  // 添加我的票务页面创建
+    void refreshMyTickets();     // 添加刷新我的票务
     
     QStackedWidget *stackedWidget;
     User* currentUser;
@@ -70,6 +73,7 @@ private:
     QLineEdit *passwordEdit;
     QListWidget *scheduleList;
     QTableWidget *movieTable;
+    QTableWidget *myTicketsTable;  // 添加我的票务表格
     QComboBox *hallComboBox;
     QComboBox *movieComboBox;
     QDateEdit *dateEdit;
