@@ -13,6 +13,7 @@ class QTableWidget;
 class QLabel;
 class QComboBox;
 class QDateEdit;
+class QGridLayout;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
@@ -43,10 +44,11 @@ private slots:
     
     // Customer functions
     void showMovieList();
-    void showSeatSelection();
+    void showSeatSelection(int scheduleId);
     void purchaseTicket();
     void cancelTicket();
     void refreshCustomerMovieList();
+    void onSeatSelected(bool checked);
 
 private:
     void setupUI();
@@ -72,6 +74,11 @@ private:
     QComboBox *movieComboBox;
     QDateEdit *dateEdit;
     QComboBox *timeComboBox;
+
+    int currentScheduleId = -1;
+    QGridLayout* seatLayout = nullptr;
+    QLabel* seatInfoLabel = nullptr;
+    QVector<QPushButton*> seatButtons;
 };
 
 #endif

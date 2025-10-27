@@ -425,17 +425,22 @@ void MainWindow::createSeatSelectionPage() {
     
     QLabel *titleLabel = new QLabel("选择座位");
     titleLabel->setAlignment(Qt::AlignCenter);
+    QFont titleFont = titleLabel->font();
+    titleFont.setPointSize(16);
+    titleLabel->setFont(titleFont);
     
     // 座位图容器
     QWidget *seatMapWidget = new QWidget;
-    // 这里会动态创建座位按钮
+    seatLayout = new QGridLayout(seatMapWidget);
+    seatLayout->setSpacing(5);
     
     // 信息显示
-    QLabel *infoLabel = new QLabel;
+    seatInfoLabel = new QLabel("请选择座位");
+    seatInfoLabel->setAlignment(Qt::AlignCenter);
     
     // 操作按钮
     QHBoxLayout *buttonLayout = new QHBoxLayout;
-    QPushButton *confirmBtn = new QPushButton("确认选座");
+    QPushButton *confirmBtn = new QPushButton("确认购票");
     QPushButton *cancelBtn = new QPushButton("取消");
     
     buttonLayout->addWidget(confirmBtn);
@@ -443,13 +448,28 @@ void MainWindow::createSeatSelectionPage() {
     
     layout->addWidget(titleLabel);
     layout->addWidget(seatMapWidget);
-    layout->addWidget(infoLabel);
+    layout->addWidget(seatInfoLabel);
     layout->addLayout(buttonLayout);
     
     connect(confirmBtn, &QPushButton::clicked, this, &MainWindow::purchaseTicket);
     connect(cancelBtn, &QPushButton::clicked, this, &MainWindow::showMovieList);
     
     stackedWidget->addWidget(page);
+}
+
+// 添加座位选择处理
+void MainWindow::onSeatSelected(bool checked) {
+    QPushButton* seatBtn = qobject_cast<QPushButton*>(sender());
+    if (!seatBtn) return;
+    
+    int row = seatBtn->property("row").toInt();
+    int col = seatBtn->property("col").toInt();
+    
+    if (checked) {
+        seatInfoLabel->setText(QString("已选择: 第%1排 第%2座").arg(row + 1).arg(col + 1));
+    } else {
+        seatInfoLabel->setText("请选择座位");
+    }
 }
 
 // 页面切换方法
@@ -491,7 +511,86 @@ void MainWindow::showMovieList() {
     stackedWidget->setCurrentIndex(8);
 }
 
-void MainWindow::showSeatSelection() {
+void MainWindow::showSeatSelection(int scheduleId) {
+    currentScheduleId = scheduleId;
+    Schedule* schedule = DataManager::getInstance().findSchedule(scheduleId);
+    if (!schedule) {
+        QMessageBox::warning(this, "错误", "排片信息不存在");
+        return;
+    }
+    
+    // 清空之前的座位按钮和布局
+    qDeleteAll(seatButtons);
+    seatButtons.clear();
+    
+    // 清空座位布局中的所有子控件
+    QLayoutItem* item;
+    while ((item = seatLayout->takeAt(0)) != nullptr) {
+        delete item->widget();
+        delete item;
+    }
+    
+    // 获取排片和放映厅信息
+    Movie* movie = DataManager::getInstance().findMovie(schedule->getMovieId());
+    CinemaHall* hall = DataManager::getInstance().findHall(schedule->getHallId());
+    
+    if (!movie || !hall) {
+        QMessageBox::warning(this, "错误", "电影或放映厅信息不存在");
+        return;
+    }
+    
+    // 更新标题
+    QWidget* seatPage = stackedWidget->widget(9);
+    QLabel* titleLabel = seatPage->findChild<QLabel*>();
+    if (titleLabel) {
+        titleLabel->setText(QString("选择座位 - %1 - %2").arg(movie->getTitle()).arg(hall->getName()));
+    }
+    
+    // 创建座位图
+    const auto& seats = schedule->getSeats();
+    int rows = seats.size();
+    int cols = rows > 0 ? seats[0].size() : 0;
+    
+    // 添加屏幕标识（放在最上面）
+    QLabel* screenLabel = new QLabel("银幕");
+    screenLabel->setAlignment(Qt::AlignCenter);
+    screenLabel->setStyleSheet("background-color: #3498db; color: white; padding: 10px; border-radius: 5px;");
+    seatLayout->addWidget(screenLabel, 0, 0, 1, cols + 2, Qt::AlignCenter);  // 占据所有列
+    
+    // 创建座位按钮
+    for (int row = 0; row < rows; ++row) {
+        // 添加排号标签（左边）
+        QLabel* rowLabel = new QLabel(QString("第%1排").arg(row + 1));
+        rowLabel->setAlignment(Qt::AlignCenter);
+        seatLayout->addWidget(rowLabel, row + 1, 0);
+        
+        for (int col = 0; col < cols; ++col) {
+            QPushButton* seatBtn = new QPushButton(QString::number(col + 1));
+            seatBtn->setFixedSize(40, 40);
+            seatBtn->setProperty("row", row);
+            seatBtn->setProperty("col", col);
+            seatBtn->setCheckable(true);
+            
+            // 设置座位状态
+            if (seats[row][col]) {
+                seatBtn->setText("已售");
+                seatBtn->setEnabled(false);
+                seatBtn->setStyleSheet("background-color: #e74c3c; color: white;");
+            } else {
+                seatBtn->setStyleSheet(
+                    "QPushButton { background-color: #2ecc71; color: white; border: 1px solid #27ae60; }"
+                    "QPushButton:checked { background-color: #f39c12; border: 2px solid #e67e22; }"
+                    "QPushButton:hover { background-color: #27ae60; }"
+                );
+            }
+            
+            connect(seatBtn, &QPushButton::toggled, this, &MainWindow::onSeatSelected);
+            seatLayout->addWidget(seatBtn, row + 1, col + 1);  // 从第1列开始
+            seatButtons.append(seatBtn);
+        }
+    }
+    
+    seatInfoLabel->setText(QString("票价: %1元 - 请选择座位").arg(movie->getPrice()));
     stackedWidget->setCurrentIndex(9);
 }
 
@@ -641,6 +740,7 @@ void MainWindow::deleteSchedule() {
 }
 
 // 观众功能方法
+// 修改电影列表中的选座按钮连接
 void MainWindow::refreshCustomerMovieList() {
     QDate selectedDate = dateEdit->date();
     auto schedules = DataManager::getInstance().getSchedulesByDate(selectedDate);
@@ -660,16 +760,66 @@ void MainWindow::refreshCustomerMovieList() {
             
             QPushButton *bookBtn = new QPushButton("选座购票");
             bookBtn->setProperty("scheduleId", schedule.getScheduleId());
-            connect(bookBtn, &QPushButton::clicked, this, &MainWindow::showSeatSelection);
+            // 修改连接，传递排片ID
+            connect(bookBtn, &QPushButton::clicked, [this, scheduleId = schedule.getScheduleId()]() {
+                this->showSeatSelection(scheduleId);
+            });
             movieTable->setCellWidget(i, 4, bookBtn);
         }
     }
 }
 
 void MainWindow::purchaseTicket() {
-    // 购票逻辑实现
-    // 这里需要获取当前选中的座位和排片信息
-    // 创建Ticket对象并添加到DataManager
+    if (currentScheduleId == -1) {
+        QMessageBox::warning(this, "购票失败", "请先选择排片");
+        return;
+    }
+    
+    // 查找选中的座位
+    int selectedRow = -1, selectedCol = -1;
+    for (QPushButton* seatBtn : seatButtons) {
+        if (seatBtn->isChecked()) {
+            selectedRow = seatBtn->property("row").toInt();
+            selectedCol = seatBtn->property("col").toInt();
+            break;
+        }
+    }
+    
+    if (selectedRow == -1 || selectedCol == -1) {
+        QMessageBox::warning(this, "购票失败", "请先选择座位");
+        return;
+    }
+    
+    // 检查座位是否可用
+    Schedule* schedule = DataManager::getInstance().findSchedule(currentScheduleId);
+    if (!schedule) {
+        QMessageBox::warning(this, "购票失败", "排片信息不存在");
+        return;
+    }
+    
+    const auto& seats = schedule->getSeats();
+    if (selectedRow >= seats.size() || selectedCol >= seats[selectedRow].size() || 
+        seats[selectedRow][selectedCol]) {
+        QMessageBox::warning(this, "购票失败", "该座位已被购买");
+        return;
+    }
+    
+    // 创建票务
+    QString username = currentUser ? currentUser->getUsername() : "";
+    if (username.isEmpty()) {
+        QMessageBox::warning(this, "购票失败", "请先登录");
+        return;
+    }
+    
+    Ticket ticket(DataManager::getInstance().getNextTicketId(), 
+                 username, currentScheduleId, selectedRow, selectedCol, QDateTime::currentDateTime());
+    
+    DataManager::getInstance().addTicket(ticket);
+    
+    QMessageBox::information(this, "购票成功", 
+        QString("购票成功！\\n座位: 第%1排 第%2座\\n请按时观影").arg(selectedRow + 1).arg(selectedCol + 1));
+    
+    showMovieList();
 }
 
 void MainWindow::cancelTicket() {
