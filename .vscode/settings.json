@@ -69,7 +69,17 @@
         "text_encoding": "cpp",
         "thread": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "qhboxlayout": "cpp",
+        "qlineedit": "cpp",
+        "qlabel": "cpp",
+        "qheaderview": "cpp",
+        "qcombobox": "cpp",
+        "qmessagebox": "cpp",
+        "qgroupbox": "cpp",
+        "qfile": "cpp",
+        "qdir": "cpp",
+        "qdebug": "cpp"
     },
     
     "cmake.configureSettings": {

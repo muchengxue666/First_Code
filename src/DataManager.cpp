@@ -19,10 +19,16 @@ bool DataManager::registerUser(const QString& username, const QString& password,
 }
 
 User* DataManager::loginUser(const QString& username, const QString& password) {
-    User* user = findUser(username);
-    if (user && user->validatePassword(password)) {
-        currentUser = user;
-        return user;
+       // 首先确保数据已加载
+    if (users.empty()) {
+        loadAllData();
+    }
+    
+    for (auto& user : users) {
+        if (user.getUsername() == username && user.validatePassword(password)) {
+            currentUser = &user;
+            return &user;
+        }
     }
     return nullptr;
 }
@@ -239,10 +245,20 @@ bool DataManager::loadAllData() {
     // Load users
     QFile userFile("data/users.dat");
     if (userFile.open(QIODevice::ReadOnly)) {
+        qDebug() << "Loading users from file";
         QDataStream in(&userFile);
-        in >> users;
+        int userCount;
+        in >> userCount;
+        users.clear();
+        for (int i = 0; i < userCount; ++i) {
+            User user;
+            in >> user;
+            users.push_back(user);
+            qDebug() << "Loaded user:" << user.getUsername();
+        }
         userFile.close();
     } else {
+        qDebug() << "No user file found, creating default admin";
         // Create default admin user if no file exists
         users.emplace_back("admin", "admin123", UserRole::ADMIN);
         success = false;
@@ -334,7 +350,7 @@ bool DataManager::loadAllData() {
             }
         }
     }
-    
+    qDebug() << "Total users loaded:" << users.size();
     return success;
 }
 
@@ -342,6 +358,7 @@ bool DataManager::saveAllData() {
     // Create data directory if it doesn't exist
     QDir dir;
     if (!dir.exists("data")) {
+        qDebug() << "Creating data directory for saving";
         dir.mkdir("data");
     }
     
@@ -350,10 +367,16 @@ bool DataManager::saveAllData() {
     // Save users
     QFile userFile("data/users.dat");
     if (userFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "Saving users to file, count:" << users.size();
         QDataStream out(&userFile);
-        out << users;
+        out << static_cast<int>(users.size());
+        for (const auto& user : users) {
+            out << user;
+            qDebug() << "Saved user:" << user.getUsername();
+        }
         userFile.close();
     } else {
+        qDebug() << "Failed to open user file for writing:" << userFile.errorString();
         success = false;
     }
     

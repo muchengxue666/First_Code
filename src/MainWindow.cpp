@@ -180,10 +180,15 @@ void MainWindow::createRegisterPage() {
         }
         
         if (DataManager::getInstance().registerUser(username, password, UserRole::CUSTOMER)) {
+        // 确保数据立即保存
+        if (DataManager::getInstance().saveAllData()) {
             QMessageBox::information(this, "注册成功", "注册成功，请登录");
             showCustomerLogin();
         } else {
-            QMessageBox::warning(this, "注册失败", "用户名已存在");
+            QMessageBox::warning(this, "注册失败", "数据保存失败，请联系管理员");
+        }
+    } else {
+        QMessageBox::warning(this, "注册失败", "用户名已存在");
         }
     });
     
