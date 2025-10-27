@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.16)
+project(CinemaSystem)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if(WIN32)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+endif()
+
+# 自动处理 Qt 的特殊构建步骤
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+# 设置 Qt 路径
+set(CMAKE_PREFIX_PATH "E:/Qt/6.9.3/mingw_64")
+
+# 查找 Qt 组件 - 确保包含 Widgets
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui)
+
+# 创建可执行文件
+add_executable(cinema_system src/main.cpp)
+
+# 链接 Qt 库 - 确保包含 Qt6::Widgets
+target_link_libraries(cinema_system Qt6::Core Qt6::Widgets Qt6::Gui)
+
+# 设置输出目录
+set_target_properties(cinema_system PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+)

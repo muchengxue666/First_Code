@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+d6e3e436d15d105c21764aafb8a84d12 CMakeFiles/cinema_system_autogen
+6f1c305d1d946f17db7fd38189504e5f cinema_system_autogen/timestamp

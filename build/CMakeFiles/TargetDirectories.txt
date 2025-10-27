@@ -1,0 +1,5 @@
+E:/Code_Projects/build/CMakeFiles/cinema_system.dir
+E:/Code_Projects/build/CMakeFiles/edit_cache.dir
+E:/Code_Projects/build/CMakeFiles/rebuild_cache.dir
+E:/Code_Projects/build/CMakeFiles/cinema_system_autogen_timestamp_deps.dir
+E:/Code_Projects/build/CMakeFiles/cinema_system_autogen.dir

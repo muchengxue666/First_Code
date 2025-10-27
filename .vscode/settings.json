@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "qpushbutton": "cpp",
+        "new": "cpp"
+    },
+    
+    "cmake.configureSettings": {
+        "CMAKE_PREFIX_PATH": "E:/Qt/6.9.3/mingw_64"
+    },
+    "cmake.generator": "MinGW Makefiles",
+    "cmake.buildDirectory": "${workspaceFolder}/build"
+
+}
