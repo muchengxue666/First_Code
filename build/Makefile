@@ -178,6 +178,174 @@ cinema_system_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/cinema_system_autogen/mocs_compilation.cpp.s
 .PHONY : cinema_system_autogen/mocs_compilation.cpp.s
 
+src/CinemaHall.obj: src/CinemaHall.cpp.obj
+.PHONY : src/CinemaHall.obj
+
+# target to build an object file
+src/CinemaHall.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj
+.PHONY : src/CinemaHall.cpp.obj
+
+src/CinemaHall.i: src/CinemaHall.cpp.i
+.PHONY : src/CinemaHall.i
+
+# target to preprocess a source file
+src/CinemaHall.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.i
+.PHONY : src/CinemaHall.cpp.i
+
+src/CinemaHall.s: src/CinemaHall.cpp.s
+.PHONY : src/CinemaHall.s
+
+# target to generate assembly for a file
+src/CinemaHall.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.s
+.PHONY : src/CinemaHall.cpp.s
+
+src/DataManager.obj: src/DataManager.cpp.obj
+.PHONY : src/DataManager.obj
+
+# target to build an object file
+src/DataManager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj
+.PHONY : src/DataManager.cpp.obj
+
+src/DataManager.i: src/DataManager.cpp.i
+.PHONY : src/DataManager.i
+
+# target to preprocess a source file
+src/DataManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/DataManager.cpp.i
+.PHONY : src/DataManager.cpp.i
+
+src/DataManager.s: src/DataManager.cpp.s
+.PHONY : src/DataManager.s
+
+# target to generate assembly for a file
+src/DataManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/DataManager.cpp.s
+.PHONY : src/DataManager.cpp.s
+
+src/MainWindow.obj: src/MainWindow.cpp.obj
+.PHONY : src/MainWindow.obj
+
+# target to build an object file
+src/MainWindow.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj
+.PHONY : src/MainWindow.cpp.obj
+
+src/MainWindow.i: src/MainWindow.cpp.i
+.PHONY : src/MainWindow.i
+
+# target to preprocess a source file
+src/MainWindow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/MainWindow.cpp.i
+.PHONY : src/MainWindow.cpp.i
+
+src/MainWindow.s: src/MainWindow.cpp.s
+.PHONY : src/MainWindow.s
+
+# target to generate assembly for a file
+src/MainWindow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/MainWindow.cpp.s
+.PHONY : src/MainWindow.cpp.s
+
+src/Movie.obj: src/Movie.cpp.obj
+.PHONY : src/Movie.obj
+
+# target to build an object file
+src/Movie.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Movie.cpp.obj
+.PHONY : src/Movie.cpp.obj
+
+src/Movie.i: src/Movie.cpp.i
+.PHONY : src/Movie.i
+
+# target to preprocess a source file
+src/Movie.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Movie.cpp.i
+.PHONY : src/Movie.cpp.i
+
+src/Movie.s: src/Movie.cpp.s
+.PHONY : src/Movie.s
+
+# target to generate assembly for a file
+src/Movie.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Movie.cpp.s
+.PHONY : src/Movie.cpp.s
+
+src/Schedule.obj: src/Schedule.cpp.obj
+.PHONY : src/Schedule.obj
+
+# target to build an object file
+src/Schedule.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj
+.PHONY : src/Schedule.cpp.obj
+
+src/Schedule.i: src/Schedule.cpp.i
+.PHONY : src/Schedule.i
+
+# target to preprocess a source file
+src/Schedule.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Schedule.cpp.i
+.PHONY : src/Schedule.cpp.i
+
+src/Schedule.s: src/Schedule.cpp.s
+.PHONY : src/Schedule.s
+
+# target to generate assembly for a file
+src/Schedule.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Schedule.cpp.s
+.PHONY : src/Schedule.cpp.s
+
+src/Ticket.obj: src/Ticket.cpp.obj
+.PHONY : src/Ticket.obj
+
+# target to build an object file
+src/Ticket.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj
+.PHONY : src/Ticket.cpp.obj
+
+src/Ticket.i: src/Ticket.cpp.i
+.PHONY : src/Ticket.i
+
+# target to preprocess a source file
+src/Ticket.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Ticket.cpp.i
+.PHONY : src/Ticket.cpp.i
+
+src/Ticket.s: src/Ticket.cpp.s
+.PHONY : src/Ticket.s
+
+# target to generate assembly for a file
+src/Ticket.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/Ticket.cpp.s
+.PHONY : src/Ticket.cpp.s
+
+src/User.obj: src/User.cpp.obj
+.PHONY : src/User.obj
+
+# target to build an object file
+src/User.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/User.cpp.obj
+.PHONY : src/User.cpp.obj
+
+src/User.i: src/User.cpp.i
+.PHONY : src/User.i
+
+# target to preprocess a source file
+src/User.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/User.cpp.i
+.PHONY : src/User.cpp.i
+
+src/User.s: src/User.cpp.s
+.PHONY : src/User.s
+
+# target to generate assembly for a file
+src/User.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/src/User.cpp.s
+.PHONY : src/User.cpp.s
+
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
 
@@ -216,6 +384,27 @@ help:
 	@echo ... cinema_system_autogen/mocs_compilation.obj
 	@echo ... cinema_system_autogen/mocs_compilation.i
 	@echo ... cinema_system_autogen/mocs_compilation.s
+	@echo ... src/CinemaHall.obj
+	@echo ... src/CinemaHall.i
+	@echo ... src/CinemaHall.s
+	@echo ... src/DataManager.obj
+	@echo ... src/DataManager.i
+	@echo ... src/DataManager.s
+	@echo ... src/MainWindow.obj
+	@echo ... src/MainWindow.i
+	@echo ... src/MainWindow.s
+	@echo ... src/Movie.obj
+	@echo ... src/Movie.i
+	@echo ... src/Movie.s
+	@echo ... src/Schedule.obj
+	@echo ... src/Schedule.i
+	@echo ... src/Schedule.s
+	@echo ... src/Ticket.obj
+	@echo ... src/Ticket.i
+	@echo ... src/Ticket.s
+	@echo ... src/User.obj
+	@echo ... src/User.i
+	@echo ... src/User.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s

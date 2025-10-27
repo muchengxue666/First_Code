@@ -108,16 +108,135 @@ CMakeFiles/cinema_system.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/main.cpp.s"
 	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\main.cpp -o CMakeFiles\cinema_system.dir\src\main.cpp.s
 
+CMakeFiles/cinema_system.dir/src/User.cpp.obj: CMakeFiles/cinema_system.dir/flags.make
+CMakeFiles/cinema_system.dir/src/User.cpp.obj: CMakeFiles/cinema_system.dir/includes_CXX.rsp
+CMakeFiles/cinema_system.dir/src/User.cpp.obj: E:/Code_Projects/src/User.cpp
+CMakeFiles/cinema_system.dir/src/User.cpp.obj: CMakeFiles/cinema_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/cinema_system.dir/src/User.cpp.obj"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cinema_system.dir/src/User.cpp.obj -MF CMakeFiles\cinema_system.dir\src\User.cpp.obj.d -o CMakeFiles\cinema_system.dir\src\User.cpp.obj -c E:\Code_Projects\src\User.cpp
+
+CMakeFiles/cinema_system.dir/src/User.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cinema_system.dir/src/User.cpp.i"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Code_Projects\src\User.cpp > CMakeFiles\cinema_system.dir\src\User.cpp.i
+
+CMakeFiles/cinema_system.dir/src/User.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/User.cpp.s"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\User.cpp -o CMakeFiles\cinema_system.dir\src\User.cpp.s
+
+CMakeFiles/cinema_system.dir/src/Movie.cpp.obj: CMakeFiles/cinema_system.dir/flags.make
+CMakeFiles/cinema_system.dir/src/Movie.cpp.obj: CMakeFiles/cinema_system.dir/includes_CXX.rsp
+CMakeFiles/cinema_system.dir/src/Movie.cpp.obj: E:/Code_Projects/src/Movie.cpp
+CMakeFiles/cinema_system.dir/src/Movie.cpp.obj: CMakeFiles/cinema_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/cinema_system.dir/src/Movie.cpp.obj"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cinema_system.dir/src/Movie.cpp.obj -MF CMakeFiles\cinema_system.dir\src\Movie.cpp.obj.d -o CMakeFiles\cinema_system.dir\src\Movie.cpp.obj -c E:\Code_Projects\src\Movie.cpp
+
+CMakeFiles/cinema_system.dir/src/Movie.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cinema_system.dir/src/Movie.cpp.i"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Code_Projects\src\Movie.cpp > CMakeFiles\cinema_system.dir\src\Movie.cpp.i
+
+CMakeFiles/cinema_system.dir/src/Movie.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/Movie.cpp.s"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\Movie.cpp -o CMakeFiles\cinema_system.dir\src\Movie.cpp.s
+
+CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj: CMakeFiles/cinema_system.dir/flags.make
+CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj: CMakeFiles/cinema_system.dir/includes_CXX.rsp
+CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj: E:/Code_Projects/src/Schedule.cpp
+CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj: CMakeFiles/cinema_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj -MF CMakeFiles\cinema_system.dir\src\Schedule.cpp.obj.d -o CMakeFiles\cinema_system.dir\src\Schedule.cpp.obj -c E:\Code_Projects\src\Schedule.cpp
+
+CMakeFiles/cinema_system.dir/src/Schedule.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cinema_system.dir/src/Schedule.cpp.i"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Code_Projects\src\Schedule.cpp > CMakeFiles\cinema_system.dir\src\Schedule.cpp.i
+
+CMakeFiles/cinema_system.dir/src/Schedule.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/Schedule.cpp.s"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\Schedule.cpp -o CMakeFiles\cinema_system.dir\src\Schedule.cpp.s
+
+CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj: CMakeFiles/cinema_system.dir/flags.make
+CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj: CMakeFiles/cinema_system.dir/includes_CXX.rsp
+CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj: E:/Code_Projects/src/CinemaHall.cpp
+CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj: CMakeFiles/cinema_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj -MF CMakeFiles\cinema_system.dir\src\CinemaHall.cpp.obj.d -o CMakeFiles\cinema_system.dir\src\CinemaHall.cpp.obj -c E:\Code_Projects\src\CinemaHall.cpp
+
+CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.i"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Code_Projects\src\CinemaHall.cpp > CMakeFiles\cinema_system.dir\src\CinemaHall.cpp.i
+
+CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.s"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\CinemaHall.cpp -o CMakeFiles\cinema_system.dir\src\CinemaHall.cpp.s
+
+CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj: CMakeFiles/cinema_system.dir/flags.make
+CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj: CMakeFiles/cinema_system.dir/includes_CXX.rsp
+CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj: E:/Code_Projects/src/Ticket.cpp
+CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj: CMakeFiles/cinema_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj -MF CMakeFiles\cinema_system.dir\src\Ticket.cpp.obj.d -o CMakeFiles\cinema_system.dir\src\Ticket.cpp.obj -c E:\Code_Projects\src\Ticket.cpp
+
+CMakeFiles/cinema_system.dir/src/Ticket.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cinema_system.dir/src/Ticket.cpp.i"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Code_Projects\src\Ticket.cpp > CMakeFiles\cinema_system.dir\src\Ticket.cpp.i
+
+CMakeFiles/cinema_system.dir/src/Ticket.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/Ticket.cpp.s"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\Ticket.cpp -o CMakeFiles\cinema_system.dir\src\Ticket.cpp.s
+
+CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj: CMakeFiles/cinema_system.dir/flags.make
+CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj: CMakeFiles/cinema_system.dir/includes_CXX.rsp
+CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj: E:/Code_Projects/src/DataManager.cpp
+CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj: CMakeFiles/cinema_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj -MF CMakeFiles\cinema_system.dir\src\DataManager.cpp.obj.d -o CMakeFiles\cinema_system.dir\src\DataManager.cpp.obj -c E:\Code_Projects\src\DataManager.cpp
+
+CMakeFiles/cinema_system.dir/src/DataManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cinema_system.dir/src/DataManager.cpp.i"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Code_Projects\src\DataManager.cpp > CMakeFiles\cinema_system.dir\src\DataManager.cpp.i
+
+CMakeFiles/cinema_system.dir/src/DataManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/DataManager.cpp.s"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\DataManager.cpp -o CMakeFiles\cinema_system.dir\src\DataManager.cpp.s
+
+CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj: CMakeFiles/cinema_system.dir/flags.make
+CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj: CMakeFiles/cinema_system.dir/includes_CXX.rsp
+CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj: E:/Code_Projects/src/MainWindow.cpp
+CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj: CMakeFiles/cinema_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj -MF CMakeFiles\cinema_system.dir\src\MainWindow.cpp.obj.d -o CMakeFiles\cinema_system.dir\src\MainWindow.cpp.obj -c E:\Code_Projects\src\MainWindow.cpp
+
+CMakeFiles/cinema_system.dir/src/MainWindow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cinema_system.dir/src/MainWindow.cpp.i"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Code_Projects\src\MainWindow.cpp > CMakeFiles\cinema_system.dir\src\MainWindow.cpp.i
+
+CMakeFiles/cinema_system.dir/src/MainWindow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cinema_system.dir/src/MainWindow.cpp.s"
+	E:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Code_Projects\src\MainWindow.cpp -o CMakeFiles\cinema_system.dir\src\MainWindow.cpp.s
+
 # Object files for target cinema_system
 cinema_system_OBJECTS = \
 "CMakeFiles/cinema_system.dir/cinema_system_autogen/mocs_compilation.cpp.obj" \
-"CMakeFiles/cinema_system.dir/src/main.cpp.obj"
+"CMakeFiles/cinema_system.dir/src/main.cpp.obj" \
+"CMakeFiles/cinema_system.dir/src/User.cpp.obj" \
+"CMakeFiles/cinema_system.dir/src/Movie.cpp.obj" \
+"CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj" \
+"CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj" \
+"CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj" \
+"CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj" \
+"CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj"
 
 # External object files for target cinema_system
 cinema_system_EXTERNAL_OBJECTS =
 
 cinema_system.exe: CMakeFiles/cinema_system.dir/cinema_system_autogen/mocs_compilation.cpp.obj
 cinema_system.exe: CMakeFiles/cinema_system.dir/src/main.cpp.obj
+cinema_system.exe: CMakeFiles/cinema_system.dir/src/User.cpp.obj
+cinema_system.exe: CMakeFiles/cinema_system.dir/src/Movie.cpp.obj
+cinema_system.exe: CMakeFiles/cinema_system.dir/src/Schedule.cpp.obj
+cinema_system.exe: CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj
+cinema_system.exe: CMakeFiles/cinema_system.dir/src/Ticket.cpp.obj
+cinema_system.exe: CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj
+cinema_system.exe: CMakeFiles/cinema_system.dir/src/MainWindow.cpp.obj
 cinema_system.exe: CMakeFiles/cinema_system.dir/build.make
 cinema_system.exe: E:/Qt/6.9.3/mingw_64/lib/libQt6Widgets.a
 cinema_system.exe: E:/Qt/6.9.3/mingw_64/lib/libQt6Gui.a
@@ -125,7 +244,7 @@ cinema_system.exe: E:/Qt/6.9.3/mingw_64/lib/libQt6Core.a
 cinema_system.exe: CMakeFiles/cinema_system.dir/linkLibs.rsp
 cinema_system.exe: CMakeFiles/cinema_system.dir/objects1.rsp
 cinema_system.exe: CMakeFiles/cinema_system.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable cinema_system.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable cinema_system.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\cinema_system.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

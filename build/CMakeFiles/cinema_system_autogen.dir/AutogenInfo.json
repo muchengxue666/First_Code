@@ -309,7 +309,51 @@
 	"CROSS_CONFIG" : false,
 	"DEP_FILE" : "E:/Code_Projects/build/cinema_system_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "cinema_system_autogen/timestamp",
-	"HEADERS" : [],
+	"HEADERS" : 
+	[
+		[
+			"E:/Code_Projects/include/CinemaHall.h",
+			"MU",
+			"6YEA5652QU/moc_CinemaHall.cpp",
+			null
+		],
+		[
+			"E:/Code_Projects/include/DataManager.h",
+			"MU",
+			"6YEA5652QU/moc_DataManager.cpp",
+			null
+		],
+		[
+			"E:/Code_Projects/include/MainWindow.h",
+			"MU",
+			"6YEA5652QU/moc_MainWindow.cpp",
+			null
+		],
+		[
+			"E:/Code_Projects/include/Movie.h",
+			"MU",
+			"6YEA5652QU/moc_Movie.cpp",
+			null
+		],
+		[
+			"E:/Code_Projects/include/Schedule.h",
+			"MU",
+			"6YEA5652QU/moc_Schedule.cpp",
+			null
+		],
+		[
+			"E:/Code_Projects/include/Ticket.h",
+			"MU",
+			"6YEA5652QU/moc_Ticket.cpp",
+			null
+		],
+		[
+			"E:/Code_Projects/include/User.h",
+			"MU",
+			"6YEA5652QU/moc_User.cpp",
+			null
+		]
+	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "E:/Code_Projects/build/cinema_system_autogen/include",
 	"MOC_COMPILATION_FILE" : "E:/Code_Projects/build/cinema_system_autogen/mocs_compilation.cpp",
@@ -380,6 +424,13 @@
 	"SETTINGS_FILE" : "E:/Code_Projects/build/CMakeFiles/cinema_system_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[ "E:/Code_Projects/src/CinemaHall.cpp", "MU", null ],
+		[ "E:/Code_Projects/src/DataManager.cpp", "MU", null ],
+		[ "E:/Code_Projects/src/MainWindow.cpp", "MU", null ],
+		[ "E:/Code_Projects/src/Movie.cpp", "MU", null ],
+		[ "E:/Code_Projects/src/Schedule.cpp", "MU", null ],
+		[ "E:/Code_Projects/src/Ticket.cpp", "MU", null ],
+		[ "E:/Code_Projects/src/User.cpp", "MU", null ],
 		[ "E:/Code_Projects/src/main.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],

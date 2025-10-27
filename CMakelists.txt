@@ -16,11 +16,32 @@ set(CMAKE_AUTOUIC ON)
 # 设置 Qt 路径
 set(CMAKE_PREFIX_PATH "E:/Qt/6.9.3/mingw_64")
 
+set(SOURCES
+    src/main.cpp
+    src/User.cpp
+    src/Movie.cpp
+    src/Schedule.cpp
+    src/CinemaHall.cpp
+    src/Ticket.cpp
+    src/DataManager.cpp
+    src/MainWindow.cpp
+)
+
+set(HEADERS
+    include/User.h
+    include/Movie.h
+    include/Schedule.h
+    include/CinemaHall.h
+    include/Ticket.h
+    include/DataManager.h
+    include/MainWindow.h
+)
+
 # 查找 Qt 组件 - 确保包含 Widgets
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui)
 
 # 创建可执行文件
-add_executable(cinema_system src/main.cpp)
+add_executable(cinema_system ${SOURCES} ${HEADERS})
 
 # 链接 Qt 库 - 确保包含 Qt6::Widgets
 target_link_libraries(cinema_system Qt6::Core Qt6::Widgets Qt6::Gui)
