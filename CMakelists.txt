@@ -13,8 +13,14 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# 设置 Qt 路径
+# 设置 Qt 路径 - 确保路径正确
 set(CMAKE_PREFIX_PATH "E:/Qt/6.9.3/mingw_64")
+
+# 查找 Qt 组件 - 确保包含 Widgets
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+
+# 设置包含目录 - 添加这一行
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 set(SOURCES
     src/main.cpp
@@ -37,14 +43,14 @@ set(HEADERS
     include/MainWindow.h
 )
 
-# 查找 Qt 组件 - 确保包含 Widgets
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui)
-
 # 创建可执行文件
 add_executable(cinema_system ${SOURCES} ${HEADERS})
 
-# 链接 Qt 库 - 确保包含 Qt6::Widgets
-target_link_libraries(cinema_system Qt6::Core Qt6::Widgets Qt6::Gui)
+# 设置目标属性包含目录 - 更现代的方式
+target_include_directories(cinema_system PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+# 链接 Qt 库
+target_link_libraries(cinema_system Qt6::Core Qt6::Widgets)
 
 # 设置输出目录
 set_target_properties(cinema_system PROPERTIES

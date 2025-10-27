@@ -28,7 +28,7 @@ private slots:
     void showCustomerRegister();
     void handleAdminLogin();
     void handleCustomerLogin();
-    void handleCustomerRegister();
+    // void handleCustomerRegister();
     void showAdminDashboard();
     void showCustomerDashboard();
     void logout();

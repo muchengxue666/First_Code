@@ -381,6 +381,7 @@ CMakeFiles/cinema_system.dir/src/main.cpp.obj: \
  E:/Qt/6.9.3/mingw_64/include/QtCore/qhash.h \
  E:/Qt/6.9.3/mingw_64/include/QtCore/qvarlengtharray.h \
  E:/Qt/6.9.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+ E:/Code_Projects/include/MainWindow.h \
  E:/Qt/6.9.3/mingw_64/include/QtWidgets/QMainWindow \
  E:/Qt/6.9.3/mingw_64/include/QtWidgets/qmainwindow.h \
  E:/Qt/6.9.3/mingw_64/include/QtWidgets/qwidget.h \
@@ -396,25 +397,17 @@ CMakeFiles/cinema_system.dir/src/main.cpp.obj: \
  E:/Qt/6.9.3/mingw_64/include/QtGui/qfontvariableaxis.h \
  E:/Qt/6.9.3/mingw_64/include/QtWidgets/qsizepolicy.h \
  E:/Qt/6.9.3/mingw_64/include/QtWidgets/qtabwidget.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/QPushButton \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qpushbutton.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qabstractbutton.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/QVBoxLayout \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qboxlayout.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qlayout.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qlayoutitem.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qboxlayout.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qgridlayout.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/QWidget \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qwidget.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/QLabel \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qlabel.h \
+ E:/Qt/6.9.3/mingw_64/include/QtWidgets/QStackedWidget \
+ E:/Qt/6.9.3/mingw_64/include/QtWidgets/qstackedwidget.h \
  E:/Qt/6.9.3/mingw_64/include/QtWidgets/qframe.h \
- E:/Qt/6.9.3/mingw_64/include/QtGui/qpicture.h \
- E:/Qt/6.9.3/mingw_64/include/QtCore/qiodevice.h \
- E:/Qt/6.9.3/mingw_64/include/QtGui/qtextdocument.h \
- E:/Qt/6.9.3/mingw_64/include/QtCore/qurl.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/QMessageBox \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qmessagebox.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qdialog.h \
- E:/Qt/6.9.3/mingw_64/include/QtWidgets/qdialogbuttonbox.h
+ E:/Code_Projects/include/User.h \
+ E:/Qt/6.9.3/mingw_64/include/QtCore/QString \
+ E:/Qt/6.9.3/mingw_64/include/QtCore/qstring.h \
+ E:/Qt/6.9.3/mingw_64/include/QtCore/QDate \
+ E:/Qt/6.9.3/mingw_64/include/QtCore/qdatetime.h \
+ E:/Qt/6.9.3/mingw_64/include/QtCore/qcalendar.h \
+ E:/Code_Projects/include/DataManager.h E:/Code_Projects/include/Movie.h \
+ E:/Qt/6.9.3/mingw_64/include/QtCore/QTime \
+ E:/Code_Projects/include/Schedule.h \
+ E:/Qt/6.9.3/mingw_64/include/QtCore/QDateTime \
+ E:/Code_Projects/include/CinemaHall.h E:/Code_Projects/include/Ticket.h

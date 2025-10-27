@@ -15,12 +15,12 @@ public:
     
     std::vector<std::pair<QString, double>> getBoxOfficeStats(const QDate& date) const;
 
-    // ID generation
+    // ID生成方法
     int getNextMovieId();
     int getNextScheduleId();
     int getNextTicketId();
     
-    // Current user management
+    // 当前用户管理
     User* getCurrentUser() const;
     void setCurrentUser(User* user);
 
@@ -34,7 +34,7 @@ public:
     void updateMovie(const Movie& movie);
     void deleteMovie(int movieId);
     Movie* findMovie(int movieId);
-    std::vector<Movie> getAllMovies() const;
+    QVector<Movie> getAllMovies() const;
     
     // Schedule management
     void addSchedule(const Schedule& schedule);
@@ -42,12 +42,12 @@ public:
     void deleteSchedule(int scheduleId);
     Schedule* findSchedule(int scheduleId);
     std::vector<Schedule> getSchedulesByDate(const QDate& date) const;
-    std::vector<Schedule> getAllSchedules() const;
+    QVector<Schedule> getAllSchedules() const;
     
     // Hall management
     void addHall(const CinemaHall& hall);
     CinemaHall* findHall(int hallId);
-    std::vector<CinemaHall> getAllHalls() const;
+    QVector<CinemaHall> getAllHalls() const;
     
     // Ticket management
     void addTicket(const Ticket& ticket);
@@ -62,11 +62,11 @@ public:
 private:
     DataManager() = default;
     
-    std::vector<User> users;
-    std::vector<Movie> movies;
-    std::vector<CinemaHall> halls;
-    std::vector<Schedule> schedules;
-    std::vector<Ticket> tickets;
+    QVector<User> users;
+    QVector<Movie> movies;
+    QVector<CinemaHall> halls;
+    QVector<Schedule> schedules;
+    QVector<Ticket> tickets;
     
     User* currentUser = nullptr;
     

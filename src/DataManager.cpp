@@ -74,7 +74,7 @@ Movie* DataManager::findMovie(int movieId) {
     return nullptr;
 }
 
-std::vector<Movie> DataManager::getAllMovies() const {
+QVector<Movie> DataManager::getAllMovies() const {
     return movies;
 }
 
@@ -133,7 +133,7 @@ std::vector<Schedule> DataManager::getSchedulesByDate(const QDate& date) const {
     return result;
 }
 
-std::vector<Schedule> DataManager::getAllSchedules() const {
+QVector<Schedule> DataManager::getAllSchedules() const {
     return schedules;
 }
 
@@ -152,7 +152,7 @@ CinemaHall* DataManager::findHall(int hallId) {
     return nullptr;
 }
 
-std::vector<CinemaHall> DataManager::getAllHalls() const {
+QVector<CinemaHall> DataManager::getAllHalls() const {
     return halls;
 }
 
