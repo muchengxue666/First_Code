@@ -89,12 +89,12 @@ void MainWindow::createLoginPage(bool isAdmin) {
     titleLabel->setFont(titleFont);
     
     QFormLayout *formLayout = new QFormLayout;
-    usernameEdit = new QLineEdit;
-    passwordEdit = new QLineEdit;
-    passwordEdit->setEchoMode(QLineEdit::Password);
+    QLineEdit *loginUsernameEdit = new QLineEdit;  // 使用不同的变量名
+    QLineEdit *loginPasswordEdit = new QLineEdit;
+    loginPasswordEdit->setEchoMode(QLineEdit::Password);
     
-    formLayout->addRow("用户名:", usernameEdit);
-    formLayout->addRow("密码:", passwordEdit);
+    formLayout->addRow("用户名:", loginUsernameEdit);
+    formLayout->addRow("密码:", loginPasswordEdit);
     
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *loginBtn = new QPushButton("登录");
@@ -118,9 +118,31 @@ void MainWindow::createLoginPage(bool isAdmin) {
     layout->addStretch();
     
     if (isAdmin) {
-        connect(loginBtn, &QPushButton::clicked, this, &MainWindow::handleAdminLogin);
+        connect(loginBtn, &QPushButton::clicked, [this, loginUsernameEdit, loginPasswordEdit]() {
+            QString username = loginUsernameEdit->text();
+            QString password = loginPasswordEdit->text();
+            
+            User* user = DataManager::getInstance().loginUser(username, password);
+            if (user && user->getRole() == UserRole::ADMIN) {
+                currentUser = user;
+                showAdminDashboard();
+            } else {
+                QMessageBox::warning(this, "登录失败", "用户名或密码错误");
+            }
+        });
     } else {
-        connect(loginBtn, &QPushButton::clicked, this, &MainWindow::handleCustomerLogin);
+        connect(loginBtn, &QPushButton::clicked, [this, loginUsernameEdit, loginPasswordEdit]() {
+            QString username = loginUsernameEdit->text();
+            QString password = loginPasswordEdit->text();
+            
+            User* user = DataManager::getInstance().loginUser(username, password);
+            if (user && user->getRole() == UserRole::CUSTOMER) {
+                currentUser = user;
+                showCustomerDashboard();
+            } else {
+                QMessageBox::warning(this, "登录失败", "用户名或密码错误");
+            }
+        });
     }
     connect(backBtn, &QPushButton::clicked, this, &MainWindow::showRoleSelection);
     
@@ -139,14 +161,14 @@ void MainWindow::createRegisterPage() {
     titleLabel->setFont(titleFont);
     
     QFormLayout *formLayout = new QFormLayout;
-    usernameEdit = new QLineEdit;
-    passwordEdit = new QLineEdit;
-    passwordEdit->setEchoMode(QLineEdit::Password);
+    QLineEdit *regUsernameEdit = new QLineEdit;  // 使用不同的变量名
+    QLineEdit *regPasswordEdit = new QLineEdit;
+    regPasswordEdit->setEchoMode(QLineEdit::Password);
     QLineEdit *confirmPasswordEdit = new QLineEdit;
     confirmPasswordEdit->setEchoMode(QLineEdit::Password);
     
-    formLayout->addRow("用户名:", usernameEdit);
-    formLayout->addRow("密码:", passwordEdit);
+    formLayout->addRow("用户名:", regUsernameEdit);
+    formLayout->addRow("密码:", regPasswordEdit);
     formLayout->addRow("确认密码:", confirmPasswordEdit);
     
     QHBoxLayout *buttonLayout = new QHBoxLayout;
@@ -164,9 +186,9 @@ void MainWindow::createRegisterPage() {
     layout->addLayout(buttonLayout);
     layout->addStretch();
     
-    connect(registerBtn, &QPushButton::clicked, [this, confirmPasswordEdit]() {
-        QString username = usernameEdit->text();
-        QString password = passwordEdit->text();
+    connect(registerBtn, &QPushButton::clicked, [this, regUsernameEdit, regPasswordEdit, confirmPasswordEdit]() {
+        QString username = regUsernameEdit->text();
+        QString password = regPasswordEdit->text();
         QString confirmPassword = confirmPasswordEdit->text();
         
         if (username.isEmpty() || password.isEmpty()) {
@@ -180,15 +202,14 @@ void MainWindow::createRegisterPage() {
         }
         
         if (DataManager::getInstance().registerUser(username, password, UserRole::CUSTOMER)) {
-        // 确保数据立即保存
-        if (DataManager::getInstance().saveAllData()) {
             QMessageBox::information(this, "注册成功", "注册成功，请登录");
+            // 清空输入框
+            regUsernameEdit->clear();
+            regPasswordEdit->clear();
+            confirmPasswordEdit->clear();
             showCustomerLogin();
         } else {
-            QMessageBox::warning(this, "注册失败", "数据保存失败，请联系管理员");
-        }
-    } else {
-        QMessageBox::warning(this, "注册失败", "用户名已存在");
+            QMessageBox::warning(this, "注册失败", "用户名已存在");
         }
     });
     

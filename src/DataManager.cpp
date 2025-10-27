@@ -19,17 +19,17 @@ bool DataManager::registerUser(const QString& username, const QString& password,
 }
 
 User* DataManager::loginUser(const QString& username, const QString& password) {
-       // 首先确保数据已加载
-    if (users.empty()) {
-        loadAllData();
-    }
+    // 强制重新加载数据以确保数据是最新的
+    loadAllData();
     
     for (auto& user : users) {
         if (user.getUsername() == username && user.validatePassword(password)) {
             currentUser = &user;
+            qDebug() << "Login successful for user:" << username;
             return &user;
         }
     }
+    qDebug() << "Login failed for user:" << username;
     return nullptr;
 }
 
@@ -257,10 +257,27 @@ bool DataManager::loadAllData() {
             qDebug() << "Loaded user:" << user.getUsername();
         }
         userFile.close();
+        
+        // 检查是否加载了管理员账户
+        bool hasAdmin = false;
+        for (const auto& user : users) {
+            if (user.getUsername() == "admin" && user.getRole() == UserRole::ADMIN) {
+                hasAdmin = true;
+                break;
+            }
+        }
+        
+        // 如果没有管理员账户，创建默认管理员
+        if (!hasAdmin) {
+            qDebug() << "No admin user found, creating default admin";
+            users.emplace_back("admin", "admin123", UserRole::ADMIN);
+            saveAllData();  // 立即保存
+        }
     } else {
         qDebug() << "No user file found, creating default admin";
-        // Create default admin user if no file exists
+        // 创建默认管理员用户如果文件不存在
         users.emplace_back("admin", "admin123", UserRole::ADMIN);
+        saveAllData();  // 立即保存
         success = false;
     }
     
