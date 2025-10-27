@@ -79,7 +79,8 @@
         "qgroupbox": "cpp",
         "qfile": "cpp",
         "qdir": "cpp",
-        "qdebug": "cpp"
+        "qdebug": "cpp",
+        "qapplication": "cpp"
     },
     
     "cmake.configureSettings": {
