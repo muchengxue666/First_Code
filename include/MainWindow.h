@@ -37,10 +37,15 @@ private slots:
     // Admin functions
     void showScheduleManagement();
     void showBoxOfficeStats();
+    void showMovieManagement();  // 添加电影管理显示
     void addNewSchedule();
     void editSchedule();
     void deleteSchedule();
     void refreshScheduleList();
+    void addNewMovie();          // 添加新增电影
+    void editMovie();            // 添加编辑电影
+    void deleteMovie();          // 添加删除电影
+    void refreshMovieList();     // 添加刷新电影列表
     
     // Customer functions
     void showMovieList();
@@ -58,6 +63,7 @@ private:
     void createRegisterPage();
     void createAdminDashboard();
     void createCustomerDashboard();
+    void createMovieManagementPage();  // 添加电影管理页面创建
     void createScheduleManagementPage();
     void createBoxOfficePage();
     void createMovieListPage();
@@ -72,6 +78,7 @@ private:
     QLineEdit *usernameEdit;
     QLineEdit *passwordEdit;
     QListWidget *scheduleList;
+    QListWidget *movieList;      // 添加电影列表
     QTableWidget *movieTable;
     QTableWidget *myTicketsTable;  // 添加我的票务表格
     QComboBox *hallComboBox;

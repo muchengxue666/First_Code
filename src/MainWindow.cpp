@@ -41,6 +41,7 @@ void MainWindow::setupUI() {
     createRegisterPage();
     createAdminDashboard();
     createCustomerDashboard();
+    createMovieManagementPage();  // 添加电影管理页面
     createScheduleManagementPage();
     createBoxOfficePage();
     createMovieListPage();
@@ -230,10 +231,12 @@ void MainWindow::createAdminDashboard() {
     titleFont.setPointSize(18);
     titleLabel->setFont(titleFont);
     
+    QPushButton *movieManageBtn = new QPushButton("电影管理");  // 新增电影管理按钮
     QPushButton *scheduleBtn = new QPushButton("排片管理");
     QPushButton *boxOfficeBtn = new QPushButton("票房统计");
     QPushButton *logoutBtn = new QPushButton("退出登录");
     
+    movieManageBtn->setMinimumHeight(50);
     scheduleBtn->setMinimumHeight(50);
     boxOfficeBtn->setMinimumHeight(50);
     logoutBtn->setMinimumHeight(40);
@@ -241,11 +244,13 @@ void MainWindow::createAdminDashboard() {
     layout->addStretch();
     layout->addWidget(titleLabel);
     layout->addSpacing(30);
+    layout->addWidget(movieManageBtn);
     layout->addWidget(scheduleBtn);
     layout->addWidget(boxOfficeBtn);
     layout->addStretch();
     layout->addWidget(logoutBtn);
     
+    connect(movieManageBtn, &QPushButton::clicked, this, &MainWindow::showMovieManagement);  // 连接电影管理
     connect(scheduleBtn, &QPushButton::clicked, this, &MainWindow::showScheduleManagement);
     connect(boxOfficeBtn, &QPushButton::clicked, this, &MainWindow::showBoxOfficeStats);
     connect(logoutBtn, &QPushButton::clicked, this, &MainWindow::logout);
@@ -316,7 +321,7 @@ void MainWindow::createMyTicketsPage() {
 // 添加显示我的票务方法
 void MainWindow::showMyTickets() {
     refreshMyTickets();
-    stackedWidget->setCurrentIndex(10);  // 假设这是第10个页面
+    stackedWidget->setCurrentIndex(11);  // 我的票务页面
 }
 
 // 添加刷新我的票务方法
@@ -371,6 +376,44 @@ void MainWindow::cancelTicket() {
         QMessageBox::information(this, "退票成功", "退票成功！");
     }
 }
+
+void MainWindow::createMovieManagementPage() {
+    QWidget *page = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout(page);
+    
+    QLabel *titleLabel = new QLabel("电影管理");
+    titleLabel->setAlignment(Qt::AlignCenter);
+    QFont titleFont = titleLabel->font();
+    titleFont.setPointSize(16);
+    titleLabel->setFont(titleFont);
+    
+    // 电影列表
+    movieList = new QListWidget;
+    
+    // 操作按钮
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    QPushButton *addBtn = new QPushButton("新增电影");
+    QPushButton *editBtn = new QPushButton("编辑电影");
+    QPushButton *deleteBtn = new QPushButton("删除电影");
+    QPushButton *backBtn = new QPushButton("返回");
+    
+    buttonLayout->addWidget(addBtn);
+    buttonLayout->addWidget(editBtn);
+    buttonLayout->addWidget(deleteBtn);
+    buttonLayout->addWidget(backBtn);
+    
+    layout->addWidget(titleLabel);
+    layout->addWidget(movieList);
+    layout->addLayout(buttonLayout);
+    
+    connect(addBtn, &QPushButton::clicked, this, &MainWindow::addNewMovie);
+    connect(editBtn, &QPushButton::clicked, this, &MainWindow::editMovie);
+    connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::deleteMovie);
+    connect(backBtn, &QPushButton::clicked, this, &MainWindow::showAdminDashboard);
+    
+    stackedWidget->addWidget(page);
+}
+
 
 // 排片管理页面
 void MainWindow::createScheduleManagementPage() {
@@ -505,6 +548,159 @@ void MainWindow::createMovieListPage() {
     stackedWidget->addWidget(page);
 }
 
+
+// 添加刷新电影列表方法
+void MainWindow::refreshMovieList() {
+    movieList->clear();
+    
+    auto movies = DataManager::getInstance().getAllMovies();
+    for (const auto& movie : movies) {
+        QString itemText = QString("%1 - %2 - %3 - %4分钟 - %5元")
+                              .arg(movie.getTitle())
+                              .arg(movie.getDirector())
+                              .arg(movie.getGenre())
+                              .arg(movie.getDuration().toString("hh:mm"))
+                              .arg(movie.getPrice());
+        
+        QListWidgetItem* item = new QListWidgetItem(itemText);
+        item->setData(Qt::UserRole, movie.getId());
+        movieList->addItem(item);
+    }
+}
+
+// 添加新增电影方法
+void MainWindow::addNewMovie() {
+    // 创建添加电影对话框
+    QDialog dialog(this);
+    dialog.setWindowTitle("新增电影");
+    
+    QFormLayout *formLayout = new QFormLayout(&dialog);
+    
+    QLineEdit *titleEdit = new QLineEdit;
+    QLineEdit *directorEdit = new QLineEdit;
+    QLineEdit *genreEdit = new QLineEdit;
+    QTimeEdit *durationEdit = new QTimeEdit;
+    durationEdit->setTime(QTime(2, 0, 0));
+    durationEdit->setDisplayFormat("hh:mm");
+    QDoubleSpinBox *priceSpinBox = new QDoubleSpinBox;
+    priceSpinBox->setRange(20, 200);
+    priceSpinBox->setValue(45);
+    priceSpinBox->setSuffix(" 元");
+    
+    formLayout->addRow("电影名称:", titleEdit);
+    formLayout->addRow("导演:", directorEdit);
+    formLayout->addRow("类型:", genreEdit);
+    formLayout->addRow("时长:", durationEdit);
+    formLayout->addRow("票价:", priceSpinBox);
+    
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    formLayout->addRow(buttonBox);
+    
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    
+    if (dialog.exec() == QDialog::Accepted) {
+        QString title = titleEdit->text();
+        QString director = directorEdit->text();
+        QString genre = genreEdit->text();
+        QTime duration = durationEdit->time();
+        double price = priceSpinBox->value();
+        
+        if (title.isEmpty() || director.isEmpty() || genre.isEmpty()) {
+            QMessageBox::warning(this, "新增失败", "请填写完整信息");
+            return;
+        }
+        
+        Movie newMovie(DataManager::getInstance().getNextMovieId(), 
+                      title, director, duration, genre, price);
+        
+        DataManager::getInstance().addMovie(newMovie);
+        refreshMovieList();
+        QMessageBox::information(this, "新增成功", "电影添加成功！");
+    }
+}
+
+// 添加编辑电影方法
+void MainWindow::editMovie() {
+    QList<QListWidgetItem*> selectedItems = movieList->selectedItems();
+    if (selectedItems.isEmpty()) {
+        QMessageBox::warning(this, "编辑电影", "请选择要编辑的电影");
+        return;
+    }
+    
+    int movieId = selectedItems.first()->data(Qt::UserRole).toInt();
+    Movie* movie = DataManager::getInstance().findMovie(movieId);
+    if (!movie) return;
+    
+    // 编辑对话框实现类似新增
+    QDialog dialog(this);
+    dialog.setWindowTitle("编辑电影");
+    
+    QFormLayout *formLayout = new QFormLayout(&dialog);
+    
+    QLineEdit *titleEdit = new QLineEdit(movie->getTitle());
+    QLineEdit *directorEdit = new QLineEdit(movie->getDirector());
+    QLineEdit *genreEdit = new QLineEdit(movie->getGenre());
+    QTimeEdit *durationEdit = new QTimeEdit(movie->getDuration());
+    durationEdit->setDisplayFormat("hh:mm");
+    QDoubleSpinBox *priceSpinBox = new QDoubleSpinBox;
+    priceSpinBox->setRange(20, 200);
+    priceSpinBox->setValue(movie->getPrice());
+    priceSpinBox->setSuffix(" 元");
+    
+    formLayout->addRow("电影名称:", titleEdit);
+    formLayout->addRow("导演:", directorEdit);
+    formLayout->addRow("类型:", genreEdit);
+    formLayout->addRow("时长:", durationEdit);
+    formLayout->addRow("票价:", priceSpinBox);
+    
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    formLayout->addRow(buttonBox);
+    
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    
+    if (dialog.exec() == QDialog::Accepted) {
+        QString title = titleEdit->text();
+        QString director = directorEdit->text();
+        QString genre = genreEdit->text();
+        QTime duration = durationEdit->time();
+        double price = priceSpinBox->value();
+        
+        if (title.isEmpty() || director.isEmpty() || genre.isEmpty()) {
+            QMessageBox::warning(this, "编辑失败", "请填写完整信息");
+            return;
+        }
+        
+        Movie updatedMovie(movieId, title, director, duration, genre, price);
+        DataManager::getInstance().updateMovie(updatedMovie);
+        refreshMovieList();
+        QMessageBox::information(this, "编辑成功", "电影信息更新成功！");
+    }
+}
+
+// 添加删除电影方法
+void MainWindow::deleteMovie() {
+    QList<QListWidgetItem*> selectedItems = movieList->selectedItems();
+    if (selectedItems.isEmpty()) {
+        QMessageBox::warning(this, "删除电影", "请选择要删除的电影");
+        return;
+    }
+    
+    int movieId = selectedItems.first()->data(Qt::UserRole).toInt();
+    
+    QMessageBox::StandardButton reply = QMessageBox::question(
+        this, "确认删除", "确定要删除这个电影吗？",
+        QMessageBox::Yes | QMessageBox::No
+    );
+    
+    if (reply == QMessageBox::Yes) {
+        DataManager::getInstance().deleteMovie(movieId);
+        refreshMovieList();
+        QMessageBox::information(this, "删除成功", "电影删除成功！");
+    }
+}
+
 // 座位选择页面
 void MainWindow::createSeatSelectionPage() {
     QWidget *page = new QWidget;
@@ -594,16 +790,23 @@ void MainWindow::showCustomerDashboard() {
 
 void MainWindow::showScheduleManagement() {
     refreshScheduleList();
-    stackedWidget->setCurrentIndex(6);
+    stackedWidget->setCurrentIndex(7);  // 排片管理页面
 }
 
 void MainWindow::showBoxOfficeStats() {
-    stackedWidget->setCurrentIndex(7);
+    stackedWidget->setCurrentIndex(8);  // 票房统计页面
 }
+
 
 void MainWindow::showMovieList() {
     refreshCustomerMovieList();
-    stackedWidget->setCurrentIndex(8);
+    stackedWidget->setCurrentIndex(9);  // 电影列表页面
+}
+
+// 添加显示电影管理方法
+void MainWindow::showMovieManagement() {
+    refreshMovieList();
+    stackedWidget->setCurrentIndex(6);  // 假设这是第6个页面
 }
 
 void MainWindow::showSeatSelection(int scheduleId) {

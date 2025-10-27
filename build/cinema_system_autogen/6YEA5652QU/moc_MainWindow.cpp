@@ -51,10 +51,15 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "logout",
         "showScheduleManagement",
         "showBoxOfficeStats",
+        "showMovieManagement",
         "addNewSchedule",
         "editSchedule",
         "deleteSchedule",
         "refreshScheduleList",
+        "addNewMovie",
+        "editMovie",
+        "deleteMovie",
+        "refreshMovieList",
         "showMovieList",
         "showSeatSelection",
         "scheduleId",
@@ -89,32 +94,42 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         QtMocHelpers::SlotData<void()>(11, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'showBoxOfficeStats'
         QtMocHelpers::SlotData<void()>(12, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'addNewSchedule'
+        // Slot 'showMovieManagement'
         QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'editSchedule'
+        // Slot 'addNewSchedule'
         QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'deleteSchedule'
+        // Slot 'editSchedule'
         QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'refreshScheduleList'
+        // Slot 'deleteSchedule'
         QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showMovieList'
+        // Slot 'refreshScheduleList'
         QtMocHelpers::SlotData<void()>(17, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'addNewMovie'
+        QtMocHelpers::SlotData<void()>(18, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'editMovie'
+        QtMocHelpers::SlotData<void()>(19, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'deleteMovie'
+        QtMocHelpers::SlotData<void()>(20, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'refreshMovieList'
+        QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'showMovieList'
+        QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'showSeatSelection'
-        QtMocHelpers::SlotData<void(int)>(18, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 19 },
+        QtMocHelpers::SlotData<void(int)>(23, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 24 },
         }}),
         // Slot 'purchaseTicket'
-        QtMocHelpers::SlotData<void()>(20, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(25, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'cancelTicket'
-        QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(26, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'refreshCustomerMovieList'
-        QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(27, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onSeatSelected'
-        QtMocHelpers::SlotData<void(bool)>(23, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Bool, 24 },
+        QtMocHelpers::SlotData<void(bool)>(28, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Bool, 29 },
         }}),
         // Slot 'showMyTickets'
-        QtMocHelpers::SlotData<void()>(25, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(30, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -149,17 +164,22 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->logout(); break;
         case 9: _t->showScheduleManagement(); break;
         case 10: _t->showBoxOfficeStats(); break;
-        case 11: _t->addNewSchedule(); break;
-        case 12: _t->editSchedule(); break;
-        case 13: _t->deleteSchedule(); break;
-        case 14: _t->refreshScheduleList(); break;
-        case 15: _t->showMovieList(); break;
-        case 16: _t->showSeatSelection((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 17: _t->purchaseTicket(); break;
-        case 18: _t->cancelTicket(); break;
-        case 19: _t->refreshCustomerMovieList(); break;
-        case 20: _t->onSeatSelected((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
-        case 21: _t->showMyTickets(); break;
+        case 11: _t->showMovieManagement(); break;
+        case 12: _t->addNewSchedule(); break;
+        case 13: _t->editSchedule(); break;
+        case 14: _t->deleteSchedule(); break;
+        case 15: _t->refreshScheduleList(); break;
+        case 16: _t->addNewMovie(); break;
+        case 17: _t->editMovie(); break;
+        case 18: _t->deleteMovie(); break;
+        case 19: _t->refreshMovieList(); break;
+        case 20: _t->showMovieList(); break;
+        case 21: _t->showSeatSelection((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 22: _t->purchaseTicket(); break;
+        case 23: _t->cancelTicket(); break;
+        case 24: _t->refreshCustomerMovieList(); break;
+        case 25: _t->onSeatSelected((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 26: _t->showMyTickets(); break;
         default: ;
         }
     }
@@ -184,14 +204,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 27)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 27;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 27)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 22;
+        _id -= 27;
     }
     return _id;
 }

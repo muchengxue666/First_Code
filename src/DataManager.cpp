@@ -314,7 +314,9 @@ bool DataManager::loadAllData() {
         // Create some sample halls
         halls.emplace_back(1, "1号厅", 8, 10);
         halls.emplace_back(2, "2号厅", 6, 8);
-        halls.emplace_back(3, "VIP厅", 4, 6);
+        halls.emplace_back(3, "3号厅", 10, 12);  // 将VIP厅改为3号厅
+        halls.emplace_back(4, "4号厅", 8, 8);    // 添加4号厅
+        halls.emplace_back(5, "5号厅", 6, 10);   // 添加5号厅
         success = false;
     }
     
@@ -342,8 +344,10 @@ bool DataManager::loadAllData() {
         QDate tomorrow = QDate::currentDate().addDays(1);
         schedules.emplace_back(nextScheduleId++, 1, 1, QDateTime(tomorrow, QTime(10, 0, 0)));
         schedules.emplace_back(nextScheduleId++, 2, 2, QDateTime(tomorrow, QTime(13, 30, 0)));
-        schedules.emplace_back(nextScheduleId++, 3, 3, QDateTime(tomorrow, QTime(16, 0, 0)));
-        schedules.emplace_back(nextScheduleId++, 1, 1, QDateTime(tomorrow, QTime(19, 0, 0)));
+        schedules.emplace_back(nextScheduleId++, 3, 3, QDateTime(tomorrow, QTime(16, 0, 0)));  // 改为3号厅
+        // schedules.emplace_back(nextScheduleId++, 1, 1, QDateTime(tomorrow, QTime(19, 0, 0)));
+        // schedules.emplace_back(nextScheduleId++, 2, 4, QDateTime(tomorrow, QTime(20, 30, 0)));  // 添加4号厅排片
+        // schedules.emplace_back(nextScheduleId++, 3, 5, QDateTime(tomorrow, QTime(21, 0, 0)));   // 添加5号厅排片
         
         // Set up seat layouts for new schedules
         for (auto& schedule : schedules) {
