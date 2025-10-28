@@ -83,8 +83,8 @@ clean: CMakeFiles/cinema_system_autogen.dir/clean
 # Target rules for target CMakeFiles/cinema_system.dir
 
 # All Build rule for target.
-CMakeFiles/cinema_system.dir/all: CMakeFiles/cinema_system_autogen_timestamp_deps.dir/all
 CMakeFiles/cinema_system.dir/all: CMakeFiles/cinema_system_autogen.dir/all
+CMakeFiles/cinema_system.dir/all: CMakeFiles/cinema_system_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target cinema_system"

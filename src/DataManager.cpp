@@ -477,6 +477,34 @@ std::vector<std::pair<QString, double>> DataManager::getBoxOfficeStats(const QDa
     return stats;
 }
 
+// 获取电影总票房统计
+std::vector<std::pair<QString, double>> DataManager::getTotalBoxOfficeStats() const {
+    std::vector<std::pair<QString, double>> stats;
+    
+    // Map to accumulate total box office by movie title
+    std::map<QString, double> movieBoxOffice;
+    
+    // 遍历所有排片，累加每部电影的总票房
+    for (const auto& schedule : schedules) {
+        if (schedule.getBoxOffice() > 0) {
+            Movie* movie = const_cast<DataManager*>(this)->findMovie(schedule.getMovieId());
+            if (movie) {
+                movieBoxOffice[movie->getTitle()] += schedule.getBoxOffice();
+            }
+        }
+    }
+    
+    // 转换为向量并按票房降序排序
+    for (const auto& [title, revenue] : movieBoxOffice) {
+        stats.emplace_back(title, revenue);
+    }
+    
+    std::sort(stats.begin(), stats.end(),
+              [](const auto& a, const auto& b) { return a.second > b.second; });
+    
+    return stats;
+}
+
 // Get next available IDs
 int DataManager::getNextMovieId() { return nextMovieId++; }
 int DataManager::getNextScheduleId() { return nextScheduleId++; }

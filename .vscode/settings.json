@@ -90,7 +90,10 @@
         "qtimeedit": "cpp",
         "qformlayout": "cpp",
         "qbuttongroup": "cpp",
-        "qradiobutton": "cpp"
+        "qradiobutton": "cpp",
+        "qlistwidget": "cpp",
+        "qgridlayout": "cpp",
+        "qdatetime": "cpp"
     },
     
     "cmake.configureSettings": {

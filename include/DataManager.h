@@ -14,6 +14,7 @@ public:
     static DataManager& getInstance();
     
     std::vector<std::pair<QString, double>> getBoxOfficeStats(const QDate& date) const;
+    std::vector<std::pair<QString, double>> getTotalBoxOfficeStats() const;
 
     // ID生成方法
     int getNextMovieId();

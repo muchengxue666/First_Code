@@ -464,34 +464,26 @@ void MainWindow::createBoxOfficePage() {
     titleFont.setPointSize(16);
     titleLabel->setFont(titleFont);
     
-    // 日期选择
-    QHBoxLayout *dateLayout = new QHBoxLayout;
-    QLabel *dateLabel = new QLabel("选择日期:");
-    dateEdit = new QDateEdit;
-    dateEdit->setDate(QDate::currentDate());
-    dateEdit->setCalendarPopup(true);
+    // 添加刷新按钮
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *refreshBtn = new QPushButton("刷新");
-    
-    dateLayout->addWidget(dateLabel);
-    dateLayout->addWidget(dateEdit);
-    dateLayout->addWidget(refreshBtn);
-    dateLayout->addStretch();
+    buttonLayout->addWidget(refreshBtn);
+    buttonLayout->addStretch();
     
     // 票房表格
     QTableWidget *boxOfficeTable = new QTableWidget;
     boxOfficeTable->setColumnCount(3);
-    boxOfficeTable->setHorizontalHeaderLabels({"电影名称", "票房收入(元)", "排名"});
+    boxOfficeTable->setHorizontalHeaderLabels({"电影名称", "总票房收入(元)", "排名"});
     
     QPushButton *backBtn = new QPushButton("返回");
     
     layout->addWidget(titleLabel);
-    layout->addLayout(dateLayout);
+    layout->addLayout(buttonLayout);
     layout->addWidget(boxOfficeTable);
     layout->addWidget(backBtn);
     
     connect(refreshBtn, &QPushButton::clicked, [this, boxOfficeTable]() {
-        QDate selectedDate = dateEdit->date();
-        auto stats = DataManager::getInstance().getBoxOfficeStats(selectedDate);
+        auto stats = DataManager::getInstance().getTotalBoxOfficeStats();
         
         boxOfficeTable->setRowCount(stats.size());
         for (int i = 0; i < stats.size(); ++i) {
@@ -837,8 +829,8 @@ void MainWindow::showSeatSelection(int scheduleId) {
         return;
     }
     
-    // 更新标题
-    QWidget* seatPage = stackedWidget->widget(9);
+    // 更新座位选择页面的标题
+    QWidget* seatPage = stackedWidget->widget(10); // 座位选择页面是第10个
     QLabel* titleLabel = seatPage->findChild<QLabel*>();
     if (titleLabel) {
         titleLabel->setText(QString("选择座位 - %1 - %2").arg(movie->getTitle()).arg(hall->getName()));
