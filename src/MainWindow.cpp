@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), currentUser(nullp
 }
 
 void MainWindow::setupUI() {
-    setWindowTitle("电影院售票系统");
+    setWindowTitle("模拟电影院售票系统");
     setMinimumSize(800, 600);
     
     stackedWidget = new QStackedWidget(this);
@@ -53,8 +53,10 @@ void MainWindow::setupUI() {
 void MainWindow::createRoleSelectionPage() {
     QWidget *page = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout(page);
+
+    QLabel *titleLabel = new QLabel("欢迎光临模拟电影院售票系统");
+    titleLabel->setStyleSheet(titleLabelStyle);
     
-    QLabel *titleLabel = new QLabel("电影院售票系统");
     titleLabel->setAlignment(Qt::AlignCenter);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(20);
@@ -98,6 +100,8 @@ void MainWindow::createLoginPage(bool isAdmin) {
     QVBoxLayout *layout = new QVBoxLayout(page);
     
     QLabel *titleLabel = new QLabel(isAdmin ? "管理员登录" : "观众登录");
+    titleLabel->setStyleSheet(titleLabelStyle);
+
     titleLabel->setAlignment(Qt::AlignCenter);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(16);
@@ -198,6 +202,8 @@ void MainWindow::createRegisterPage() {
     QVBoxLayout *layout = new QVBoxLayout(page);
     
     QLabel *titleLabel = new QLabel("观众注册");
+    titleLabel->setStyleSheet(titleLabelStyle);
+
     titleLabel->setAlignment(Qt::AlignCenter);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(16);
@@ -296,6 +302,8 @@ void MainWindow::createAdminDashboard() {
     QVBoxLayout *layout = new QVBoxLayout(page);
     
     QLabel *titleLabel = new QLabel("管理员控制台");
+    titleLabel->setStyleSheet(titleLabelStyle);
+
     titleLabel->setAlignment(Qt::AlignCenter);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(18);
@@ -351,6 +359,7 @@ void MainWindow::createCustomerDashboard() {
     QVBoxLayout *layout = new QVBoxLayout(page);
     
     QLabel *titleLabel = new QLabel("观众中心");
+    titleLabel->setStyleSheet(titleLabelStyle);
     titleLabel->setAlignment(Qt::AlignCenter);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(18);
@@ -408,13 +417,18 @@ void MainWindow::createMyTicketsPage() {
     myTicketsTable = new QTableWidget;
     myTicketsTable->setColumnCount(6);
     myTicketsTable->setHorizontalHeaderLabels({"电影名称", "放映厅", "放映时间", "座位", "购票时间", "操作"});
-    
+    myTicketsTable->setStyleSheet(tableWidgetStyle);
+
     QPushButton *backBtn = new QPushButton("返回");
-    
+     // 设置返回按钮样式和大小
+    backBtn->setStyleSheet(buttonStyle);
+    backBtn->setFixedSize(120, 40);
+
     layout->addWidget(titleLabel);
     layout->addWidget(myTicketsTable);
     layout->addWidget(backBtn);
-    
+    layout->addWidget(backBtn, 0, Qt::AlignCenter);  // 居中显示返回按钮
+
     connect(backBtn, &QPushButton::clicked, this, &MainWindow::showCustomerDashboard);
     
     stackedWidget->addWidget(page);
@@ -451,12 +465,46 @@ void MainWindow::refreshMyTickets() {
                 myTicketsTable->setItem(i, 3, new QTableWidgetItem(QString("第%1排 第%2座").arg(ticket.getRow() + 1).arg(ticket.getCol() + 1)));
                 myTicketsTable->setItem(i, 4, new QTableWidgetItem(ticket.getPurchaseTime().toString("yyyy-MM-dd hh:mm")));
                 
+                // 创建退票按钮 - 直接设置到单元格
                 QPushButton *cancelBtn = new QPushButton("退票");
                 cancelBtn->setProperty("ticketId", ticket.getTicketId());
+                cancelBtn->setStyleSheet(
+                    "QPushButton {"
+                    "    background-color: #e74c3c;"
+                    "    color: white;"
+                    "    border: 2px solid #c0392b;"
+                    "    border-radius: 8px;"
+                    "    font-size: 12px;"
+                    "    font-weight: bold;"
+                    "    padding: 8px 16px;"
+                    "}"
+                    "QPushButton:hover {"
+                    "    background-color: #c0392b;"
+                    "    border-color: #a93226;"
+                    "}"
+                    "QPushButton:pressed {"
+                    "    background-color: #a93226;"
+                    "    border-color: #922b21;"
+                    "}"
+                );
                 connect(cancelBtn, &QPushButton::clicked, this, &MainWindow::cancelTicket);
                 myTicketsTable->setCellWidget(i, 5, cancelBtn);
             }
         }
+    }
+    
+    // 只在第一次加载时设置表格属性，避免重复刷新导致的界面尺寸更改
+    static bool firstLoad = true;
+    if (firstLoad) {
+        // 设置表格列宽自适应
+        myTicketsTable->resizeColumnsToContents();
+        myTicketsTable->horizontalHeader()->setStretchLastSection(true);
+        
+        // 设置固定行高，避免界面收缩
+        for (int i = 0; i < myTicketsTable->rowCount(); ++i) {
+            myTicketsTable->setRowHeight(i, 63);  // 设置行高为63像素
+        }
+        firstLoad = false;
     }
 }
 
@@ -491,7 +539,8 @@ void MainWindow::createMovieManagementPage() {
     
     // 电影列表
     movieList = new QListWidget;
-    
+    movieList->setStyleSheet(listWidgetStyle);
+
     // 操作按钮
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *addBtn = new QPushButton("新增电影");
@@ -542,7 +591,8 @@ void MainWindow::createScheduleManagementPage() {
     
     // 排片列表
     scheduleList = new QListWidget;
-    
+    scheduleList->setStyleSheet(listWidgetStyle);
+
     // 操作按钮
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *addBtn = new QPushButton("新增排片");
@@ -605,6 +655,28 @@ void MainWindow::createBoxOfficePage() {
     QTableWidget *boxOfficeTable = new QTableWidget;
     boxOfficeTable->setColumnCount(3);
     boxOfficeTable->setHorizontalHeaderLabels({"电影名称", "总票房收入(元)", "排名"});
+    boxOfficeTable->setStyleSheet(tableWidgetStyle);
+    
+    // 立即设置表头自适应拉伸
+    boxOfficeTable->resizeColumnsToContents();
+    
+    // 页面创建时自动加载数据
+    auto loadBoxOfficeData = [this, boxOfficeTable]() {
+        auto stats = DataManager::getInstance().getTotalBoxOfficeStats();
+        
+        boxOfficeTable->setRowCount(stats.size());
+        for (int i = 0; i < stats.size(); ++i) {
+            boxOfficeTable->setItem(i, 0, new QTableWidgetItem(stats[i].first));
+            boxOfficeTable->setItem(i, 1, new QTableWidgetItem(QString::number(stats[i].second, 'f', 2)));
+            boxOfficeTable->setItem(i, 2, new QTableWidgetItem(QString::number(i + 1)));
+        }
+        
+        // 刷新后重新自适应列宽
+        boxOfficeTable->resizeColumnsToContents();
+    };
+    
+    // 页面创建时立即加载数据
+    loadBoxOfficeData();
     
     QPushButton *backBtn = new QPushButton("返回");
     
@@ -617,16 +689,8 @@ void MainWindow::createBoxOfficePage() {
     layout->addWidget(boxOfficeTable);
     layout->addWidget(backBtn);
     
-    connect(refreshBtn, &QPushButton::clicked, [this, boxOfficeTable]() {
-        auto stats = DataManager::getInstance().getTotalBoxOfficeStats();
-        
-        boxOfficeTable->setRowCount(stats.size());
-        for (int i = 0; i < stats.size(); ++i) {
-            boxOfficeTable->setItem(i, 0, new QTableWidgetItem(stats[i].first));
-            boxOfficeTable->setItem(i, 1, new QTableWidgetItem(QString::number(stats[i].second, 'f', 2)));
-            boxOfficeTable->setItem(i, 2, new QTableWidgetItem(QString::number(i + 1)));
-        }
-    });
+    // 刷新按钮连接
+    connect(refreshBtn, &QPushButton::clicked, loadBoxOfficeData);
     
     connect(backBtn, &QPushButton::clicked, this, &MainWindow::showAdminDashboard);
     
@@ -661,13 +725,18 @@ void MainWindow::createMovieListPage() {
     movieTable = new QTableWidget;
     movieTable->setColumnCount(5);
     movieTable->setHorizontalHeaderLabels({"电影名称", "放映厅", "放映时间", "剩余座位", "操作"});
-    
+    movieTable->setStyleSheet(tableWidgetStyle);
+
     QPushButton *backBtn = new QPushButton("返回");
     
+    // 设置返回按钮样式和大小
+    backBtn->setStyleSheet(buttonStyle);
+    backBtn->setFixedSize(120, 40);
+
     layout->addWidget(titleLabel);
     layout->addLayout(dateLayout);
     layout->addWidget(movieTable);
-    layout->addWidget(backBtn);
+    layout->addWidget(backBtn, 0, Qt::AlignCenter);  // 居中显示返回按钮
     
     connect(refreshBtn, &QPushButton::clicked, this, &MainWindow::refreshCustomerMovieList);
     connect(backBtn, &QPushButton::clicked, this, &MainWindow::showCustomerDashboard);
@@ -1220,15 +1289,46 @@ void MainWindow::refreshCustomerMovieList() {
             movieTable->setItem(validRow, 2, new QTableWidgetItem(schedule.getShowTime().toString("hh:mm")));
             movieTable->setItem(validRow, 3, new QTableWidgetItem(QString::number(schedule.getAvailableSeats())));
             
+            // 简化按钮创建，直接设置到单元格
             QPushButton *bookBtn = new QPushButton("选座购票");
             bookBtn->setProperty("scheduleId", schedule.getScheduleId());
+            bookBtn->setStyleSheet(
+                "QPushButton {"
+                "    background-color: #2c3e50;"
+                "    color: white;"
+                "    border: 2px solid #34495e;"
+                "    border-radius: 8px;"
+                "    font-size: 16px;"
+                "    font-weight: bold;"
+                "    padding: 8px 16px;"
+                "}"
+                "QPushButton:hover {"
+                "    background-color: #34495e;"
+                "    border-color: #4a69bd;"
+                "}"
+                "QPushButton:pressed {"
+                "    background-color: #1a252f;"
+                "    border-color: #4a69bd;"
+                "}"
+            );
+            
             // 修改连接，传递排片ID
             connect(bookBtn, &QPushButton::clicked, [this, scheduleId = schedule.getScheduleId()]() {
                 this->showSeatSelection(scheduleId);
             });
+            
             movieTable->setCellWidget(validRow, 4, bookBtn);
             validRow++;
         }
+    }
+    
+    // 设置表格列宽自适应
+    movieTable->resizeColumnsToContents();
+    movieTable->horizontalHeader()->setStretchLastSection(true);
+    
+    // 设置行高，确保按钮有足够的空间
+    for (int i = 0; i < movieTable->rowCount(); ++i) {
+        movieTable->setRowHeight(i, 65);  // 增加行高为50像素
     }
 }
 

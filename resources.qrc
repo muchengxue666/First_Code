@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/images">
         <file>images/cinema_background.jpg</file>
-        <file>images/logo.png</file>
-        <file>images/movie_poster.jpg</file>
+        <!-- <file>images/logo.png</file>
+        <file>images/movie_poster.jpg</file> -->
     </qresource>
 </RCC>

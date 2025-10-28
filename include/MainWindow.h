@@ -116,6 +116,142 @@ private:
     "    border-color: #7f8c8d;"
     "    color: #bdc3c7;"
     "}";
-};
 
+    // 添加列表控件的统一样式
+    QString listWidgetStyle = 
+    "QListWidget {"
+    "    background-color: #2c3e50;"           // 深蓝色背景
+    "    border: 2px solid #34495e;"
+    "    border-radius: 8px;"
+    "    padding: 5px;"
+    "    font-size: 14px;"
+    "    outline: none;"
+    "    color: #ecf0f1;"                      // 浅灰色文字
+    "}"
+    "QListWidget::item {"
+    "    background-color: #34495e;"           // 稍亮的蓝色背景
+    "    border: 1px solid #4a69bd;"           // 蓝色边框
+    "    border-radius: 6px;"
+    "    padding: 12px 15px;"
+    "    margin: 3px 0px;"
+    "    color: #ecf0f1;"
+    "}"
+    "QListWidget::item:selected {"
+    "    background-color: #e74c3c;"           // 选中项红色背景
+    "    color: white;"
+    "    border: 1px solid #c0392b;"
+    "    font-weight: bold;"
+    "}"
+    "QListWidget::item:hover {"
+    "    background-color: #4a69bd;"           // 悬停时蓝色背景
+    "    border: 1px solid #3498db;"
+    "    color: white;"
+    "}"
+    "QListWidget::item:alternate {"
+    "    background-color: #2c3e50;"           // 交替行颜色
+    "}"
+    "QScrollBar:vertical {"
+    "    background-color: #2c3e50;"
+    "    width: 15px;"
+    "    border-radius: 7px;"
+    "}"
+    "QScrollBar::handle:vertical {"
+    "    background-color: #3498db;"
+    "    border-radius: 7px;"
+    "    min-height: 20px;"
+    "}"
+    "QScrollBar::handle:vertical:hover {"
+    "    background-color: #2980b9;"
+    "}"
+    "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+    "    border: none;"
+    "    background: none;"
+    "}";
+
+    QString tableWidgetStyle = 
+    "QTableWidget {"
+    "    background-color: #2c3e50;"           // 深色背景
+    "    border: 2px solid #2c3e50;"
+    "    border-radius: 10px;"
+    "    gridline-color: #34495e;"
+    "    font-size: 14px;"
+    "    outline: none;"
+    "    color: #ecf0f1;"
+    "    selection-background-color: #e74c3c;" // 选中背景色
+    "    selection-color: white;"
+    "}"
+    "QTableWidget::item {"
+    "    padding: 12px 15px;"
+    "    border-bottom: 1px solid #2c3e50;"
+    "    background-color: #2c3e50;"
+    "    color: #ecf0f1;"
+    "}"
+    "QTableWidget::item:selected {"
+    "    background-color: #e74c3c;"
+    "    color: white;"
+    "    font-weight: bold;"
+    "}"
+    "QTableWidget::item:alternate {"
+    "    background-color: #34495e;"           // 交替行颜色
+    "}"
+    "QHeaderView::section {"
+    "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,"
+    "                                stop:0 #13388dff, stop:1 #c0392b);"  // 红色渐变表头
+    "    color: white;"
+    "    padding: 15px 20px;"
+    "    border: none;"
+    "    border-right: 1px solid #2c3e50;"
+    "    border-bottom: 2px solid #2c3e50;"
+    "    font-weight: bold;"
+    "    font-size: 15px;"
+    "    text-align: center;"
+    "}"
+    "QHeaderView::section:first {"
+    "    border-top-left-radius: 8px;"
+    "}"
+    "QHeaderView::section:last {"
+    "    border-top-right-radius: 8px;"
+    "}"
+    "QTableCornerButton::section {"
+    "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,"
+    "                                stop:0 #e74c3c, stop:1 #c0392b);"
+    "    border: none;"
+    "    border-bottom: 2px solid #2c3e50;"
+    "    border-top-left-radius: 8px;"
+    "}"
+    "QScrollBar:vertical {"
+    "    background-color: #2c3e50;"
+    "    width: 15px;"
+    "    border-radius: 7px;"
+    "}"
+    "QScrollBar::handle:vertical {"
+    "    background-color: #3498db;"
+    "    border-radius: 7px;"
+    "    min-height: 20px;"
+    "}"
+    "QScrollBar::handle:vertical:hover {"
+    "    background-color: #2980b9;"
+    "}"
+    "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+    "    border: none;"
+    "    background: none;"
+    "}";
+
+    // 添加标题样式
+    QString titleLabelStyle = 
+    "QLabel {"
+    "    color: #f1c40f;"                    // 亮金色
+    "    font-size: 20px;"
+    "    font-weight: bold;"
+    "    margin: 15px 0px;"
+    "    padding: 12px 25px;"
+    "    background-color: #1a1a1a;"         // 纯黑色背景模拟胶片
+    "    border-radius: 0px;"                // 直角边框模拟胶片
+    "    border: 3px solid #f1c40f;"
+    "    text-align: center;"
+    "    text-shadow: 0px 0px 8px rgba(241, 196, 15, 0.7);"  // 发光效果
+    "    letter-spacing: 2px;"               // 更大的字间距
+    "    font-family: 'Arial Black', 'Microsoft YaHei', sans-serif;"
+    "}";
+};
 #endif
