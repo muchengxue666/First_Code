@@ -85,7 +85,12 @@
         "qvboxlayout": "cpp",
         "qdateedit": "cpp",
         "qscrollarea": "cpp",
-        "qtablewidgetitem": "cpp"
+        "qtablewidgetitem": "cpp",
+        "qtablewidget": "cpp",
+        "qtimeedit": "cpp",
+        "qformlayout": "cpp",
+        "qbuttongroup": "cpp",
+        "qradiobutton": "cpp"
     },
     
     "cmake.configureSettings": {

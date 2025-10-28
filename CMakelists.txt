@@ -43,6 +43,11 @@ set(HEADERS
     include/MainWindow.h
 )
 
+# # 添加资源文件
+# set(RESOURCES
+#     resources.qrc
+# )
+
 # 创建可执行文件
 add_executable(cinema_system ${SOURCES} ${HEADERS})
 

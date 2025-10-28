@@ -49,7 +49,7 @@ void MainWindow::setupUI() {
     createMyTicketsPage();  // 添加我的票务页面
 }
 
-// 角色选择页面
+// 用户选择页面
 void MainWindow::createRoleSelectionPage() {
     QWidget *page = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout(page);
@@ -889,7 +889,7 @@ void MainWindow::showSeatSelection(int scheduleId) {
     }
     
     seatInfoLabel->setText(QString("票价: %1元 - 请选择座位").arg(movie->getPrice()));
-    stackedWidget->setCurrentIndex(9);
+    stackedWidget->setCurrentIndex(10);
 }
 
 // 登录处理
@@ -1003,7 +1003,7 @@ void MainWindow::addNewSchedule() {
 }
 
 void MainWindow::editSchedule() {
-    QList<QListWidgetItem*> selectedItems = scheduleList->selectedItems();
+     QList<QListWidgetItem*> selectedItems = scheduleList->selectedItems();
     if (selectedItems.isEmpty()) {
         QMessageBox::warning(this, "编辑排片", "请选择要编辑的排片");
         return;
@@ -1013,8 +1013,68 @@ void MainWindow::editSchedule() {
     Schedule* schedule = DataManager::getInstance().findSchedule(scheduleId);
     if (!schedule) return;
     
-    // 编辑对话框实现类似新增
-    // 这里省略详细实现
+    // 创建编辑排片对话框
+    QDialog dialog(this);
+    dialog.setWindowTitle("编辑排片");
+    
+    QFormLayout *formLayout = new QFormLayout(&dialog);
+    
+    QComboBox *movieComboBox = new QComboBox;
+    QComboBox *hallComboBox = new QComboBox;
+    QDateTimeEdit *timeEdit = new QDateTimeEdit;
+    timeEdit->setDateTime(schedule->getShowTime());
+    timeEdit->setCalendarPopup(true);
+    
+    // 填充电影列表
+    auto movies = DataManager::getInstance().getAllMovies();
+    for (const auto& movie : movies) {
+        movieComboBox->addItem(movie.getTitle(), movie.getId());
+    }
+    
+    // 填充放映厅列表
+    auto halls = DataManager::getInstance().getAllHalls();
+    for (const auto& hall : halls) {
+        hallComboBox->addItem(hall.getName(), hall.getHallId());
+    }
+    
+    // 设置当前选中的电影和放映厅
+    movieComboBox->setCurrentIndex(movieComboBox->findData(schedule->getMovieId()));
+    hallComboBox->setCurrentIndex(hallComboBox->findData(schedule->getHallId()));
+    
+    formLayout->addRow("电影:", movieComboBox);
+    formLayout->addRow("放映厅:", hallComboBox);
+    formLayout->addRow("放映时间:", timeEdit);
+    
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    formLayout->addRow(buttonBox);
+    
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    
+    if (dialog.exec() == QDialog::Accepted) {
+        int movieId = movieComboBox->currentData().toInt();
+        int hallId = hallComboBox->currentData().toInt();
+        QDateTime showTime = timeEdit->dateTime();
+        
+        // 检查是否修改了放映厅
+        if (hallId != schedule->getHallId()) {
+            // 如果修改了放映厅，需要重新设置座位布局
+            CinemaHall* newHall = DataManager::getInstance().findHall(hallId);
+            if (newHall) {
+                schedule->setSeatLayout(newHall->getRows(), newHall->getCols());
+            }
+        }
+        
+        // 更新排片信息
+        schedule->setMovieId(movieId);
+        schedule->setHallId(hallId);
+        schedule->setShowTime(showTime);
+        
+        // 更新数据管理器中的排片信息
+        DataManager::getInstance().updateSchedule(*schedule);
+        refreshScheduleList();
+        QMessageBox::information(this, "编辑成功", "排片信息更新成功！");
+    }
 }
 
 void MainWindow::deleteSchedule() {
@@ -1038,23 +1098,27 @@ void MainWindow::deleteSchedule() {
 }
 
 // 观众功能方法
-// 修改电影列表中的选座按钮连接
+// 修改了电影列表中的选座按钮连接
 void MainWindow::refreshCustomerMovieList() {
     QDate selectedDate = dateEdit->date();
     auto schedules = DataManager::getInstance().getSchedulesByDate(selectedDate);
     
-    movieTable->setRowCount(schedules.size());
+    // 先清空表格
+    movieTable->setRowCount(0);
     
+    int validRow = 0;
     for (int i = 0; i < schedules.size(); ++i) {
         const auto& schedule = schedules[i];
         Movie* movie = DataManager::getInstance().findMovie(schedule.getMovieId());
         CinemaHall* hall = DataManager::getInstance().findHall(schedule.getHallId());
         
+        // 只有当电影和放映厅都存在时才显示
         if (movie && hall) {
-            movieTable->setItem(i, 0, new QTableWidgetItem(movie->getTitle()));
-            movieTable->setItem(i, 1, new QTableWidgetItem(hall->getName()));
-            movieTable->setItem(i, 2, new QTableWidgetItem(schedule.getShowTime().toString("hh:mm")));
-            movieTable->setItem(i, 3, new QTableWidgetItem(QString::number(schedule.getAvailableSeats())));
+            movieTable->insertRow(validRow);
+            movieTable->setItem(validRow, 0, new QTableWidgetItem(movie->getTitle()));
+            movieTable->setItem(validRow, 1, new QTableWidgetItem(hall->getName()));
+            movieTable->setItem(validRow, 2, new QTableWidgetItem(schedule.getShowTime().toString("hh:mm")));
+            movieTable->setItem(validRow, 3, new QTableWidgetItem(QString::number(schedule.getAvailableSeats())));
             
             QPushButton *bookBtn = new QPushButton("选座购票");
             bookBtn->setProperty("scheduleId", schedule.getScheduleId());
@@ -1062,7 +1126,8 @@ void MainWindow::refreshCustomerMovieList() {
             connect(bookBtn, &QPushButton::clicked, [this, scheduleId = schedule.getScheduleId()]() {
                 this->showSeatSelection(scheduleId);
             });
-            movieTable->setCellWidget(i, 4, bookBtn);
+            movieTable->setCellWidget(validRow, 4, bookBtn);
+            validRow++;
         }
     }
 }

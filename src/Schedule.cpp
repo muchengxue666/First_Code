@@ -26,6 +26,14 @@ int Schedule::getAvailableSeats() const {
 
 double Schedule::getBoxOffice() const { return boxOffice; }
 
+void Schedule::setMovieId(int movieId) {
+    this->movieId = movieId;
+}
+
+void Schedule::setHallId(int hallId) {
+    this->hallId = hallId;
+}
+
 void Schedule::setShowTime(const QDateTime& showTime) {
     this->showTime = showTime;
 }

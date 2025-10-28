@@ -21,6 +21,8 @@ public:
     int getAvailableSeats() const;
     double getBoxOffice() const;
     
+    void setMovieId(int movieId);
+    void setHallId(int hallId);
     void setShowTime(const QDateTime& showTime);
     bool bookSeat(int row, int col);
     bool cancelSeat(int row, int col);
