@@ -93,7 +93,8 @@
         "qradiobutton": "cpp",
         "qlistwidget": "cpp",
         "qgridlayout": "cpp",
-        "qdatetime": "cpp"
+        "qdatetime": "cpp",
+        "qdoublespinbox": "cpp"
     },
     
     "cmake.configureSettings": {

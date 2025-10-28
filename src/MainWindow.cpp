@@ -169,6 +169,11 @@ void MainWindow::createRegisterPage() {
     QLineEdit *confirmPasswordEdit = new QLineEdit;
     confirmPasswordEdit->setEchoMode(QLineEdit::Password);
     
+    //更改输入控件的大小
+    regUsernameEdit->setFixedWidth(600);
+    regUsernameEdit->setFixedHeight(30); 
+    // confirmPasswordEdit
+
     formLayout->addRow("用户名:", regUsernameEdit);
     formLayout->addRow("密码:", regPasswordEdit);
     formLayout->addRow("确认密码:", confirmPasswordEdit);
@@ -885,31 +890,31 @@ void MainWindow::showSeatSelection(int scheduleId) {
 }
 
 // 登录处理
-void MainWindow::handleAdminLogin() {
-    QString username = usernameEdit->text();
-    QString password = passwordEdit->text();
+// void MainWindow::handleAdminLogin() {
+//     QString username = usernameEdit->text();
+//     QString password = passwordEdit->text();
     
-    User* user = DataManager::getInstance().loginUser(username, password);
-    if (user && user->getRole() == UserRole::ADMIN) {
-        currentUser = user;
-        showAdminDashboard();
-    } else {
-        QMessageBox::warning(this, "登录失败", "用户名或密码错误");
-    }
-}
+//     User* user = DataManager::getInstance().loginUser(username, password);
+//     if (user && user->getRole() == UserRole::ADMIN) {
+//         currentUser = user;
+//         showAdminDashboard();
+//     } else {
+//         QMessageBox::warning(this, "登录失败", "用户名或密码错误");
+//     }
+// }
 
-void MainWindow::handleCustomerLogin() {
-    QString username = usernameEdit->text();
-    QString password = passwordEdit->text();
+// void MainWindow::handleCustomerLogin() {
+//     QString username = usernameEdit->text();
+//     QString password = passwordEdit->text();
     
-    User* user = DataManager::getInstance().loginUser(username, password);
-    if (user && user->getRole() == UserRole::CUSTOMER) {
-        currentUser = user;
-        showCustomerDashboard();
-    } else {
-        QMessageBox::warning(this, "登录失败", "用户名或密码错误");
-    }
-}
+//     User* user = DataManager::getInstance().loginUser(username, password);
+//     if (user && user->getRole() == UserRole::CUSTOMER) {
+//         currentUser = user;
+//         showCustomerDashboard();
+//     } else {
+//         QMessageBox::warning(this, "登录失败", "用户名或密码错误");
+//     }
+// }
 
 void MainWindow::logout() {
     currentUser = nullptr;
