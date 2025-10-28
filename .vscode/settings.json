@@ -94,7 +94,8 @@
         "qlistwidget": "cpp",
         "qgridlayout": "cpp",
         "qdatetime": "cpp",
-        "qdoublespinbox": "cpp"
+        "qdoublespinbox": "cpp",
+        "qspinbox": "cpp"
     },
     
     "cmake.configureSettings": {

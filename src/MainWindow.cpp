@@ -60,17 +60,30 @@ void MainWindow::createRoleSelectionPage() {
     titleFont.setPointSize(20);
     titleLabel->setFont(titleFont);
     
+    // 创建按钮容器
+    QWidget *buttonContainer = new QWidget;
+    QVBoxLayout *buttonContainerLayout = new QVBoxLayout(buttonContainer);
+
     QPushButton *adminBtn = new QPushButton("管理员登录");
     QPushButton *customerBtn = new QPushButton("观众登录/注册");
     
-    adminBtn->setMinimumHeight(50);
-    customerBtn->setMinimumHeight(50);
-    
+    // 设置按钮固定大小
+    adminBtn->setFixedSize(200, 60);
+    customerBtn->setFixedSize(200, 60);
+
+    adminBtn->setStyleSheet(buttonStyle);
+    customerBtn->setStyleSheet(buttonStyle);
+
+    // 将按钮添加到容器布局
+    buttonContainerLayout->addWidget(adminBtn);
+    buttonContainerLayout->addSpacing(20);  // 按钮间距
+    buttonContainerLayout->addWidget(customerBtn);
+    buttonContainerLayout->setAlignment(Qt::AlignCenter);
+
     layout->addStretch();
     layout->addWidget(titleLabel);
     layout->addSpacing(50);
-    layout->addWidget(adminBtn);
-    layout->addWidget(customerBtn);
+    layout->addWidget(buttonContainer,0,Qt::AlignCenter);
     layout->addStretch();
     
     connect(adminBtn, &QPushButton::clicked, this, &MainWindow::showAdminLogin);
@@ -90,33 +103,61 @@ void MainWindow::createLoginPage(bool isAdmin) {
     titleFont.setPointSize(16);
     titleLabel->setFont(titleFont);
     
+    // 创建居中的容器
+    QWidget *formContainer = new QWidget;
+    QVBoxLayout *formContainerLayout = new QVBoxLayout(formContainer);
+    
     QFormLayout *formLayout = new QFormLayout;
-    QLineEdit *loginUsernameEdit = new QLineEdit;  // 使用不同的变量名
+    QLineEdit *loginUsernameEdit = new QLineEdit;
     QLineEdit *loginPasswordEdit = new QLineEdit;
     loginPasswordEdit->setEchoMode(QLineEdit::Password);
+
+    loginUsernameEdit->setFixedWidth(250);  // 调整为合适的宽度
+    loginUsernameEdit->setFixedHeight(35);
+    loginPasswordEdit->setFixedWidth(250);
+    loginPasswordEdit->setFixedHeight(35);
     
     formLayout->addRow("用户名:", loginUsernameEdit);
     formLayout->addRow("密码:", loginPasswordEdit);
     
+    // 设置表单布局的对齐方式
+    formLayout->setFormAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    formLayout->setLabelAlignment(Qt::AlignRight);
+    
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *loginBtn = new QPushButton("登录");
     QPushButton *backBtn = new QPushButton("返回");
+
+    loginBtn->setStyleSheet(buttonStyle);
+    backBtn->setStyleSheet(buttonStyle);
+
+    loginBtn->setFixedSize(100, 35);
+    backBtn->setFixedSize(100, 35);
     
     buttonLayout->addWidget(backBtn);
     buttonLayout->addWidget(loginBtn);
     
     if (!isAdmin) {
         QPushButton *registerBtn = new QPushButton("注册账号");
+        registerBtn->setStyleSheet(buttonStyle);
+        registerBtn->setFixedSize(100, 35);
         buttonLayout->addWidget(registerBtn);
         connect(registerBtn, &QPushButton::clicked, this, &MainWindow::showCustomerRegister);
     }
     
+    // 按钮布局居中
+    buttonLayout->setAlignment(Qt::AlignCenter);
+    
+    // 将表单和按钮添加到容器中
+    formContainerLayout->addLayout(formLayout);
+    formContainerLayout->addSpacing(20);
+    formContainerLayout->addLayout(buttonLayout);
+    formContainerLayout->setAlignment(Qt::AlignCenter);
+    
     layout->addStretch();
     layout->addWidget(titleLabel);
-    layout->addSpacing(20);
-    layout->addLayout(formLayout);
-    layout->addSpacing(20);
-    layout->addLayout(buttonLayout);
+    layout->addSpacing(30);
+    layout->addWidget(formContainer, 0, Qt::AlignCenter);  // 关键：让整个表单容器居中
     layout->addStretch();
     
     if (isAdmin) {
@@ -162,7 +203,10 @@ void MainWindow::createRegisterPage() {
     titleFont.setPointSize(16);
     titleLabel->setFont(titleFont);
     
-    QFormLayout *formLayout = new QFormLayout;
+    QFormLayout *formLayout = new QFormLayout; //对齐
+    QWidget *formContainer = new QWidget;
+    QVBoxLayout *formContainerLayout = new QVBoxLayout(formContainer);
+
     QLineEdit *regUsernameEdit = new QLineEdit;  // 使用不同的变量名
     QLineEdit *regPasswordEdit = new QLineEdit;
     regPasswordEdit->setEchoMode(QLineEdit::Password);
@@ -170,27 +214,48 @@ void MainWindow::createRegisterPage() {
     confirmPasswordEdit->setEchoMode(QLineEdit::Password);
     
     //更改输入控件的大小
-    regUsernameEdit->setFixedWidth(600);
-    regUsernameEdit->setFixedHeight(30); 
-    // confirmPasswordEdit
+
+    regUsernameEdit->setFixedWidth(250);  // 调整为合适的宽度
+    regUsernameEdit->setFixedHeight(35);
+    regPasswordEdit->setFixedWidth(250);
+    regPasswordEdit->setFixedHeight(35);
+    confirmPasswordEdit->setFixedWidth(250);
+    confirmPasswordEdit->setFixedHeight(35);
 
     formLayout->addRow("用户名:", regUsernameEdit);
     formLayout->addRow("密码:", regPasswordEdit);
     formLayout->addRow("确认密码:", confirmPasswordEdit);
     
+    // 设置表单布局的对齐方式
+    formLayout->setFormAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    formLayout->setLabelAlignment(Qt::AlignRight);
+
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *registerBtn = new QPushButton("注册");
     QPushButton *backBtn = new QPushButton("返回登录");
-    
+
+    registerBtn->setStyleSheet(buttonStyle);
+    backBtn->setStyleSheet(buttonStyle);
+
+    registerBtn->setFixedSize(100,35);
+    backBtn->setFixedSize(100,35);
+
+    // 按钮布局居中
+    buttonLayout->setAlignment(Qt::AlignCenter);
+
     buttonLayout->addWidget(backBtn);
     buttonLayout->addWidget(registerBtn);
     
+    // 将表单和按钮添加到容器中
+    formContainerLayout->addLayout(formLayout);
+    formContainerLayout->addSpacing(20);
+    formContainerLayout->addLayout(buttonLayout);
+    formContainerLayout->setAlignment(Qt::AlignCenter);
+
     layout->addStretch();
     layout->addWidget(titleLabel);
-    layout->addSpacing(20);
-    layout->addLayout(formLayout);
-    layout->addSpacing(20);
-    layout->addLayout(buttonLayout);
+    layout->addSpacing(30);
+    layout->addWidget(formContainer, 0, Qt::AlignCenter);
     layout->addStretch();
     
     connect(registerBtn, &QPushButton::clicked, [this, regUsernameEdit, regPasswordEdit, confirmPasswordEdit]() {
@@ -236,25 +301,42 @@ void MainWindow::createAdminDashboard() {
     titleFont.setPointSize(18);
     titleLabel->setFont(titleFont);
     
+    // 创建按钮容器
+    QWidget *buttonContainer = new QWidget;
+    QVBoxLayout *buttonContainerLayout = new QVBoxLayout(buttonContainer);
+
     QPushButton *movieManageBtn = new QPushButton("电影管理");  // 新增电影管理按钮
     QPushButton *scheduleBtn = new QPushButton("排片管理");
     QPushButton *boxOfficeBtn = new QPushButton("票房统计");
     QPushButton *logoutBtn = new QPushButton("退出登录");
     
-    movieManageBtn->setMinimumHeight(50);
-    scheduleBtn->setMinimumHeight(50);
-    boxOfficeBtn->setMinimumHeight(50);
-    logoutBtn->setMinimumHeight(40);
+    // 设置按钮固定大小
+    movieManageBtn->setFixedSize(200, 60);
+    scheduleBtn->setFixedSize(200, 60);
+    boxOfficeBtn->setFixedSize(200, 60);
+    logoutBtn->setFixedSize(200, 50);
     
+    movieManageBtn->setStyleSheet(buttonStyle);
+    scheduleBtn->setStyleSheet(buttonStyle);
+    boxOfficeBtn->setStyleSheet(buttonStyle);
+    logoutBtn->setStyleSheet(buttonStyle);
+
+    // 将按钮添加到容器布局
+    buttonContainerLayout->addWidget(movieManageBtn);
+    buttonContainerLayout->addSpacing(20);
+    buttonContainerLayout->addWidget(scheduleBtn);
+    buttonContainerLayout->addSpacing(20);
+    buttonContainerLayout->addWidget(boxOfficeBtn);
+    buttonContainerLayout->addSpacing(30);
+    buttonContainerLayout->addWidget(logoutBtn);
+    buttonContainerLayout->setAlignment(Qt::AlignCenter);
+
     layout->addStretch();
     layout->addWidget(titleLabel);
     layout->addSpacing(30);
-    layout->addWidget(movieManageBtn);
-    layout->addWidget(scheduleBtn);
-    layout->addWidget(boxOfficeBtn);
+    layout->addWidget(buttonContainer,0,Qt::AlignCenter);
     layout->addStretch();
-    layout->addWidget(logoutBtn);
-    
+
     connect(movieManageBtn, &QPushButton::clicked, this, &MainWindow::showMovieManagement);  // 连接电影管理
     connect(scheduleBtn, &QPushButton::clicked, this, &MainWindow::showScheduleManagement);
     connect(boxOfficeBtn, &QPushButton::clicked, this, &MainWindow::showBoxOfficeStats);
@@ -274,22 +356,37 @@ void MainWindow::createCustomerDashboard() {
     titleFont.setPointSize(18);
     titleLabel->setFont(titleFont);
     
+    // 创建按钮容器
+    QWidget *buttonContainer = new QWidget;
+    QVBoxLayout *buttonContainerLayout = new QVBoxLayout(buttonContainer);
+
     QPushButton *movieListBtn = new QPushButton("浏览电影");
     QPushButton *myTicketsBtn = new QPushButton("我的票务");
     QPushButton *logoutBtn = new QPushButton("退出登录");
     
-    movieListBtn->setMinimumHeight(50);
-    myTicketsBtn->setMinimumHeight(50);
-    logoutBtn->setMinimumHeight(40);
+    movieListBtn->setStyleSheet(buttonStyle);
+    myTicketsBtn->setStyleSheet(buttonStyle);
+    logoutBtn->setStyleSheet(buttonStyle);
+
+    // 设置按钮固定大小
+    movieListBtn->setFixedSize(200, 60);
+    myTicketsBtn->setFixedSize(200, 60);
+    logoutBtn->setFixedSize(200, 50);
     
+    // 将按钮添加到容器布局
+    buttonContainerLayout->addWidget(movieListBtn);
+    buttonContainerLayout->addSpacing(20);
+    buttonContainerLayout->addWidget(myTicketsBtn);
+    buttonContainerLayout->addSpacing(30);
+    buttonContainerLayout->addWidget(logoutBtn);
+    buttonContainerLayout->setAlignment(Qt::AlignCenter);
+
     layout->addStretch();
     layout->addWidget(titleLabel);
     layout->addSpacing(30);
-    layout->addWidget(movieListBtn);
-    layout->addWidget(myTicketsBtn);
+    layout->addWidget(buttonContainer,0,Qt::AlignCenter);
     layout->addStretch();
-    layout->addWidget(logoutBtn);
-    
+
     connect(movieListBtn, &QPushButton::clicked, this, &MainWindow::showMovieList);
     connect(myTicketsBtn, &QPushButton::clicked, this, &MainWindow::showMyTickets);  // 连接我的票务
     connect(logoutBtn, &QPushButton::clicked, this, &MainWindow::logout);
@@ -402,6 +499,18 @@ void MainWindow::createMovieManagementPage() {
     QPushButton *deleteBtn = new QPushButton("删除电影");
     QPushButton *backBtn = new QPushButton("返回");
     
+    // 设置按钮固定大小
+    addBtn->setFixedSize(120, 40);
+    editBtn->setFixedSize(120, 40);
+    deleteBtn->setFixedSize(120, 40);
+    backBtn->setFixedSize(120, 40);
+    
+    // 设置按钮样式
+    addBtn->setStyleSheet(buttonStyle);
+    editBtn->setStyleSheet(buttonStyle);
+    deleteBtn->setStyleSheet(buttonStyle);
+    backBtn->setStyleSheet(buttonStyle);
+    
     buttonLayout->addWidget(addBtn);
     buttonLayout->addWidget(editBtn);
     buttonLayout->addWidget(deleteBtn);
@@ -441,6 +550,18 @@ void MainWindow::createScheduleManagementPage() {
     QPushButton *deleteBtn = new QPushButton("删除排片");
     QPushButton *backBtn = new QPushButton("返回");
     
+    // 设置按钮固定大小
+    addBtn->setFixedSize(120, 40);
+    editBtn->setFixedSize(120, 40);
+    deleteBtn->setFixedSize(120, 40);
+    backBtn->setFixedSize(120, 40);
+    
+    // 设置按钮样式
+    addBtn->setStyleSheet(buttonStyle);
+    editBtn->setStyleSheet(buttonStyle);
+    deleteBtn->setStyleSheet(buttonStyle);
+    backBtn->setStyleSheet(buttonStyle);
+    
     buttonLayout->addWidget(addBtn);
     buttonLayout->addWidget(editBtn);
     buttonLayout->addWidget(deleteBtn);
@@ -472,6 +593,11 @@ void MainWindow::createBoxOfficePage() {
     // 添加刷新按钮
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *refreshBtn = new QPushButton("刷新");
+    
+    // 设置按钮固定大小和样式
+    refreshBtn->setFixedSize(120, 40);
+    refreshBtn->setStyleSheet(buttonStyle);
+    
     buttonLayout->addWidget(refreshBtn);
     buttonLayout->addStretch();
     
@@ -481,6 +607,10 @@ void MainWindow::createBoxOfficePage() {
     boxOfficeTable->setHorizontalHeaderLabels({"电影名称", "总票房收入(元)", "排名"});
     
     QPushButton *backBtn = new QPushButton("返回");
+    
+    // 设置返回按钮固定大小和样式
+    backBtn->setFixedSize(120, 40);
+    backBtn->setStyleSheet(buttonStyle);
     
     layout->addWidget(titleLabel);
     layout->addLayout(buttonLayout);
@@ -888,33 +1018,6 @@ void MainWindow::showSeatSelection(int scheduleId) {
     seatInfoLabel->setText(QString("票价: %1元 - 请选择座位").arg(movie->getPrice()));
     stackedWidget->setCurrentIndex(10);
 }
-
-// 登录处理
-// void MainWindow::handleAdminLogin() {
-//     QString username = usernameEdit->text();
-//     QString password = passwordEdit->text();
-    
-//     User* user = DataManager::getInstance().loginUser(username, password);
-//     if (user && user->getRole() == UserRole::ADMIN) {
-//         currentUser = user;
-//         showAdminDashboard();
-//     } else {
-//         QMessageBox::warning(this, "登录失败", "用户名或密码错误");
-//     }
-// }
-
-// void MainWindow::handleCustomerLogin() {
-//     QString username = usernameEdit->text();
-//     QString password = passwordEdit->text();
-    
-//     User* user = DataManager::getInstance().loginUser(username, password);
-//     if (user && user->getRole() == UserRole::CUSTOMER) {
-//         currentUser = user;
-//         showCustomerDashboard();
-//     } else {
-//         QMessageBox::warning(this, "登录失败", "用户名或密码错误");
-//     }
-// }
 
 void MainWindow::logout() {
     currentUser = nullptr;

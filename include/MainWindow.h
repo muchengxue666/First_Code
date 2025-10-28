@@ -90,6 +90,32 @@ private:
     QGridLayout* seatLayout = nullptr;
     QLabel* seatInfoLabel = nullptr;
     QVector<QPushButton*> seatButtons;
+
+    QString buttonStyle = 
+        "QPushButton {"
+    "    background-color: #2c3e50;"
+    "    color: white;"
+    "    border: 2px solid #34495e;"
+    "    border-radius: 8px;"
+    "    font-size: 14px;"
+    "    font-weight: bold;"
+    "    padding: 8px 16px;"
+    "    min-width: 80px;"
+    "    min-height: 32px;"
+    "}"
+    "QPushButton:hover {"
+    "    background-color: #34495e;"
+    "    border-color: #4a69bd;"
+    "}"
+    "QPushButton:pressed {"
+    "    background-color: #1a252f;"
+    "    border-color: #4a69bd;"
+    "}"
+    "QPushButton:disabled {"
+    "    background-color: #95a5a6;"
+    "    border-color: #7f8c8d;"
+    "    color: #bdc3c7;"
+    "}";
 };
 
 #endif
