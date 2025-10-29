@@ -8,16 +8,17 @@ DataManager& DataManager::getInstance() {
     return instance;
 }
 
-// User management implementations
+// 用户注册方法
 bool DataManager::registerUser(const QString& username, const QString& password, UserRole role) {
     if (findUser(username)) {
-        return false; // User already exists
+        return false; // 用户已经存在
     }
     users.emplace_back(username, password, role);
     saveAllData();
     return true;
 }
 
+//用户登录函数，返回用户实例，失败返回空
 User* DataManager::loginUser(const QString& username, const QString& password) {
     // 强制重新加载数据以确保数据是最新的
     // loadAllData();
@@ -43,7 +44,7 @@ User* DataManager::findUser(const QString& username) {
 }
 
 
-// Movie management implementations
+// 影片添加
 void DataManager::addMovie(const Movie& movie) {
     movies.push_back(movie);
     if (movie.getId() >= nextMovieId) {
@@ -61,7 +62,7 @@ void DataManager::updateMovie(const Movie& movie) {
         }
     }
 }
-
+//删除影片
 void DataManager::deleteMovie(int movieId) {
     movies.erase(
         std::remove_if(movies.begin(), movies.end(),
@@ -70,7 +71,7 @@ void DataManager::deleteMovie(int movieId) {
     );
     saveAllData();
 }
-
+//查找影片
 Movie* DataManager::findMovie(int movieId) {
     for (auto& movie : movies) {
         if (movie.getId() == movieId) {
@@ -84,7 +85,7 @@ QVector<Movie> DataManager::getAllMovies() const {
     return movies;
 }
 
-// Schedule management implementations
+// 排片添加
 void DataManager::addSchedule(const Schedule& schedule) {
     schedules.push_back(schedule);
     if (schedule.getScheduleId() >= nextScheduleId) {
@@ -104,14 +105,14 @@ void DataManager::updateSchedule(const Schedule& schedule) {
 }
 
 void DataManager::deleteSchedule(int scheduleId) {
-    // First remove all tickets for this schedule
+    // 首先删除票的信息
     tickets.erase(
         std::remove_if(tickets.begin(), tickets.end(),
                       [scheduleId](const Ticket& t) { return t.getScheduleId() == scheduleId; }),
         tickets.end()
     );
     
-    // Then remove the schedule
+    // 然后删除排片
     schedules.erase(
         std::remove_if(schedules.begin(), schedules.end(),
                       [scheduleId](const Schedule& s) { return s.getScheduleId() == scheduleId; }),
@@ -120,6 +121,7 @@ void DataManager::deleteSchedule(int scheduleId) {
     saveAllData();
 }
 
+//根据id获取排片
 Schedule* DataManager::findSchedule(int scheduleId) {
     for (auto& schedule : schedules) {
         if (schedule.getScheduleId() == scheduleId) {
@@ -129,6 +131,7 @@ Schedule* DataManager::findSchedule(int scheduleId) {
     return nullptr;
 }
 
+//根据日期获取排片
 std::vector<Schedule> DataManager::getSchedulesByDate(const QDate& date) const {
     std::vector<Schedule> result;
     for (const auto& schedule : schedules) {
@@ -143,7 +146,7 @@ QVector<Schedule> DataManager::getAllSchedules() const {
     return schedules;
 }
 
-// Hall management implementations
+// 添加影厅
 void DataManager::addHall(const CinemaHall& hall) {
     halls.push_back(hall);
     saveAllData();
@@ -162,21 +165,21 @@ QVector<CinemaHall> DataManager::getAllHalls() const {
     return halls;
 }
 
-// Ticket management implementations
+// 添加购票信息
 void DataManager::addTicket(const Ticket& ticket) {
     tickets.push_back(ticket);
     if (ticket.getTicketId() >= nextTicketId) {
         nextTicketId = ticket.getTicketId() + 1;
     }
     
-    // Update schedule box office AND mark seat as occupied
+    // 更新票房并且标记座位为已购票
     Schedule* schedule = findSchedule(ticket.getScheduleId());
     if (schedule) {
         Movie* movie = findMovie(schedule->getMovieId());
         if (movie) {
             schedule->addBoxOffice(movie->getPrice());
         }
-        // 关键修复：标记座位为已售
+        // 标记座位为已售
         schedule->bookSeat(ticket.getRow(), ticket.getCol());
     }
     saveAllData();
@@ -193,7 +196,7 @@ void DataManager::removeTicket(int ticketId) {
     }
     
     if (ticketToRemove) {
-        // Adjust box office
+        // 修改票房信息
         Schedule* schedule = findSchedule(ticketToRemove->getScheduleId());
         if (schedule) {
             Movie* movie = findMovie(schedule->getMovieId());
@@ -234,9 +237,9 @@ std::vector<Ticket> DataManager::getTicketsBySchedule(int scheduleId) const {
     return result;
 }
 
-// Data persistence implementations
+//加载数据文件的方法实现
 bool DataManager::loadAllData() {
-    // Create data directory if it doesn't exist
+    // 如果没有就创建data文件夹
     QDir dir;
     if (!dir.exists("data")) {
         dir.mkdir("data");
@@ -244,8 +247,8 @@ bool DataManager::loadAllData() {
     
     bool success = true;
     
-    // Load users
-    QFile userFile("data/users.dat");
+    //加载User
+    QFile userFile("data/users.dat");   //创建文件实例
     if (userFile.open(QIODevice::ReadOnly)) {
         qDebug() << "Loading users from file";
         QDataStream in(&userFile);
@@ -273,83 +276,80 @@ bool DataManager::loadAllData() {
         if (!hasAdmin) {
             qDebug() << "No admin user found, creating default admin";
             users.emplace_back("muchengxue", "666", UserRole::ADMIN);
-            //saveAllData();  // 立即保存
+            //saveAllData();  
         }
     } else {
         qDebug() << "No user file found, creating default admin";
         // 创建默认管理员用户如果文件不存在
         users.emplace_back("muchengxue", "666", UserRole::ADMIN);
-        //saveAllData();  // 立即保存
+        //saveAllData(); 
         success = false;
     }
     
-    // Load movies
+    // 加载电影数据
     QFile movieFile("data/movies.dat");
     if (movieFile.open(QIODevice::ReadOnly)) {
         QDataStream in(&movieFile);
         in >> movies;
         movieFile.close();
         
-        // Find the next movie ID
+        // 寻找下一个Id
         for (const auto& movie : movies) {
             if (movie.getId() >= nextMovieId) {
                 nextMovieId = movie.getId() + 1;
             }
         }
     } else {
-        // Create some sample movies
+        //创建默认电影
         movies.emplace_back(nextMovieId++, "流浪地球", "郭帆", QTime(2, 5, 0), "科幻", 45.0);
         movies.emplace_back(nextMovieId++, "热辣滚烫", "贾玲", QTime(2, 10, 0), "喜剧", 40.0);
         movies.emplace_back(nextMovieId++, "第二十条", "张艺谋", QTime(2, 15, 0), "剧情", 42.0);
         success = false;
     }
     
-    // Load halls
+    // 加载影厅数据
     QFile hallFile("data/halls.dat");
     if (hallFile.open(QIODevice::ReadOnly)) {
         QDataStream in(&hallFile);
         in >> halls;
         hallFile.close();
     } else {
-        // Create some sample halls
+        // 创建默认影厅数据
         halls.emplace_back(1, "1号厅", 8, 10);
         halls.emplace_back(2, "2号厅", 6, 8);
-        halls.emplace_back(3, "3号厅", 10, 12);  // 将VIP厅改为3号厅
+        halls.emplace_back(3, "3号厅", 10, 12);  // 添加3号厅
         halls.emplace_back(4, "4号厅", 8, 8);    // 添加4号厅
         halls.emplace_back(5, "5号厅", 6, 10);   // 添加5号厅
         success = false;
     }
     
-    // Load schedules
+    // 加载排片信息
     QFile scheduleFile("data/schedules.dat");
     if (scheduleFile.open(QIODevice::ReadOnly)) {
         QDataStream in(&scheduleFile);
         in >> schedules;
         scheduleFile.close();
         
-        // Find the next schedule ID and set up seat layouts
+        // 查找下一个排片信息并设置座位布局
         for (auto& schedule : schedules) {
             if (schedule.getScheduleId() >= nextScheduleId) {
-                nextScheduleId = schedule.getScheduleId() + 1;
+                nextScheduleId = schedule.getScheduleId() + 1;  //自增ID生成
             }
             
-            // Ensure seat layout is set up
+            // 确保座位布局被设置
             CinemaHall* hall = findHall(schedule.getHallId());
             if (hall && schedule.getSeats().empty()) {
                 schedule.setSeatLayout(hall->getRows(), hall->getCols());
             }
         }
     } else {
-        // Create some sample schedules for tomorrow
+        // 创建默认影片
         QDate tomorrow = QDate::currentDate().addDays(1);
         schedules.emplace_back(nextScheduleId++, 1, 1, QDateTime(tomorrow, QTime(10, 0, 0)));
         schedules.emplace_back(nextScheduleId++, 2, 2, QDateTime(tomorrow, QTime(13, 30, 0)));
         schedules.emplace_back(nextScheduleId++, 3, 3, QDateTime(tomorrow, QTime(16, 0, 0)));  // 改为3号厅
-        // schedules.emplace_back(nextScheduleId++, 1, 1, QDateTime(tomorrow, QTime(19, 0, 0)));
-        // schedules.emplace_back(nextScheduleId++, 2, 4, QDateTime(tomorrow, QTime(20, 30, 0)));  // 添加4号厅排片
-        // schedules.emplace_back(nextScheduleId++, 3, 5, QDateTime(tomorrow, QTime(21, 0, 0)));   // 添加5号厅排片
         
-        // Set up seat layouts for new schedules
+        // 给新加的排片增加布局
         for (auto& schedule : schedules) {
             CinemaHall* hall = findHall(schedule.getHallId());
             if (hall) {
@@ -359,14 +359,14 @@ bool DataManager::loadAllData() {
         success = false;
     }
     
-    // Load tickets
+    // 加载票的信息
     QFile ticketFile("data/tickets.dat");
     if (ticketFile.open(QIODevice::ReadOnly)) {
         QDataStream in(&ticketFile);
         in >> tickets;
         ticketFile.close();
         
-        // Find the next ticket ID
+        // 查找下一个ID
         for (const auto& ticket : tickets) {
             if (ticket.getTicketId() >= nextTicketId) {
                 nextTicketId = ticket.getTicketId() + 1;
@@ -381,8 +381,9 @@ bool DataManager::loadAllData() {
     
 }
 
+//保存所有数据
 bool DataManager::saveAllData() {
-    // Create data directory if it doesn't exist
+    //创建文件夹
     QDir dir;
     if (!dir.exists("data")) {
         qDebug() << "Creating data directory for saving";
@@ -391,7 +392,7 @@ bool DataManager::saveAllData() {
     
     bool success = true;
     
-    // Save users
+    // 保存Users
     QFile userFile("data/users.dat");
     if (userFile.open(QIODevice::WriteOnly)) {
         qDebug() << "Saving users to file, count:" << users.size();
@@ -407,7 +408,7 @@ bool DataManager::saveAllData() {
         success = false;
     }
     
-    // Save movies
+    // 保存影片
     QFile movieFile("data/movies.dat");
     if (movieFile.open(QIODevice::WriteOnly)) {
         QDataStream out(&movieFile);
@@ -417,7 +418,7 @@ bool DataManager::saveAllData() {
         success = false;
     }
     
-    // Save halls
+    // 保存影厅
     QFile hallFile("data/halls.dat");
     if (hallFile.open(QIODevice::WriteOnly)) {
         QDataStream out(&hallFile);
@@ -427,7 +428,7 @@ bool DataManager::saveAllData() {
         success = false;
     }
     
-    // Save schedules
+    // 保存排片
     QFile scheduleFile("data/schedules.dat");
     if (scheduleFile.open(QIODevice::WriteOnly)) {
         QDataStream out(&scheduleFile);
@@ -437,7 +438,7 @@ bool DataManager::saveAllData() {
         success = false;
     }
     
-    // Save tickets
+    // 保存票的信息
     QFile ticketFile("data/tickets.dat");
     if (ticketFile.open(QIODevice::WriteOnly)) {
         QDataStream out(&ticketFile);
@@ -450,11 +451,10 @@ bool DataManager::saveAllData() {
     return success;
 }
 
-// Helper function to get box office statistics
+// 获取票房信息(已失用)
 std::vector<std::pair<QString, double>> DataManager::getBoxOfficeStats(const QDate& date) const {
     std::vector<std::pair<QString, double>> stats;
     
-    // Map to accumulate box office by movie title
     std::map<QString, double> movieBoxOffice;
     
     for (const auto& schedule : schedules) {
@@ -466,7 +466,6 @@ std::vector<std::pair<QString, double>> DataManager::getBoxOfficeStats(const QDa
         }
     }
     
-    // Convert to vector and sort by box office (descending)
     for (const auto& [title, revenue] : movieBoxOffice) {
         stats.emplace_back(title, revenue);
     }
@@ -481,13 +480,13 @@ std::vector<std::pair<QString, double>> DataManager::getBoxOfficeStats(const QDa
 std::vector<std::pair<QString, double>> DataManager::getTotalBoxOfficeStats() const {
     std::vector<std::pair<QString, double>> stats;
     
-    // Map to accumulate total box office by movie title
+    // map容器计算影片名字下累计票房
     std::map<QString, double> movieBoxOffice;
     
     // 遍历所有排片，累加每部电影的总票房
     for (const auto& schedule : schedules) {
         if (schedule.getBoxOffice() > 0) {
-            Movie* movie = const_cast<DataManager*>(this)->findMovie(schedule.getMovieId());
+            Movie* movie = const_cast<DataManager*>(this)->findMovie(schedule.getMovieId());    //类型转换
             if (movie) {
                 movieBoxOffice[movie->getTitle()] += schedule.getBoxOffice();
             }
@@ -505,16 +504,16 @@ std::vector<std::pair<QString, double>> DataManager::getTotalBoxOfficeStats() co
     return stats;
 }
 
-// Get next available IDs
+// 获取自增id值
 int DataManager::getNextMovieId() { return nextMovieId++; }
 int DataManager::getNextScheduleId() { return nextScheduleId++; }
 int DataManager::getNextTicketId() { return nextTicketId++; }
 
-// Get current user
+// 获取当前用户
 User* DataManager::getCurrentUser() const { return currentUser; }
 void DataManager::setCurrentUser(User* user) { currentUser = user; }
 
-// Serialization implementations
+// 序列化重载，以下
 QDataStream &operator<<(QDataStream &out, const User &user) {
     out << user.getUsername() << user.getPassword() << static_cast<int>(user.getRole());
     return out;
@@ -557,7 +556,7 @@ QDataStream &operator>>(QDataStream &in, CinemaHall &hall) {
     return in;
 }
 
-QDataStream &operator<<(QDataStream &out, const Schedule &schedule) {
+QDataStream <DataManager*>(this)<<(QDataStream &out, const Schedule &schedule) {
     out << schedule.getScheduleId() << schedule.getMovieId() << schedule.getHallId() 
         << schedule.getShowTime() << schedule.getBoxOffice();
     
@@ -595,10 +594,10 @@ QDataStream &operator>>(QDataStream &in, Schedule &schedule) {
         }
     }
     
-    // Use a const_cast to set the seats (not ideal but works for this case)
+    //使用const_cast修改seats，合法
     const_cast<std::vector<std::vector<bool>>&>(schedule.getSeats()) = seats;
     
-    // Set box office
+    // 修改票房
     const_cast<Schedule&>(schedule).addBoxOffice(boxOffice);
     
     return in;

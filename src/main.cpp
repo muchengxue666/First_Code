@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     
-    // Load data
+    //加载数据
     DataManager::getInstance().loadAllData();
     
     MainWindow window;

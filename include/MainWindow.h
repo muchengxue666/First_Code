@@ -34,7 +34,7 @@ private slots:
     void showCustomerDashboard();
     void logout();
     
-    // Admin functions
+    // 管理员方法 
     void showScheduleManagement();
     void showBoxOfficeStats();
     void showMovieManagement();  // 添加电影管理显示
@@ -47,7 +47,7 @@ private slots:
     void deleteMovie();          // 添加删除电影
     void refreshMovieList();     // 添加刷新电影列表
     
-    // Customer functions
+    // 用户方法
     void showMovieList();
     void showSeatSelection(int scheduleId);
     void purchaseTicket();
@@ -90,7 +90,8 @@ private:
     QGridLayout* seatLayout = nullptr;
     QLabel* seatInfoLabel = nullptr;
     QVector<QPushButton*> seatButtons;
-
+    
+    //以下是css格式的表，用来加载不同风格
     QString buttonStyle = 
         "QPushButton {"
     "    background-color: #2c3e50;"
@@ -177,7 +178,7 @@ private:
     "    font-size: 14px;"
     "    outline: none;"
     "    color: #ecf0f1;"
-    "    selection-background-color: #e74c3c;" // 选中背景色
+    "    selection-background-color: #d7796fc4;" // 选中背景色
     "    selection-color: white;"
     "}"
     "QTableWidget::item {"

@@ -28,16 +28,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), currentUser(nullp
     showRoleSelection();
 }
 
-void MainWindow::setupUI() {
+void MainWindow::setupUI() {    //创建界面
     setWindowTitle("模拟电影院售票系统");
     setMinimumSize(800, 600);
     
-    stackedWidget = new QStackedWidget(this);
-    setCentralWidget(stackedWidget);
+    stackedWidget = new QStackedWidget(this);  //创建页面容器，管理不同页面
+    setCentralWidget(stackedWidget);    //设置主窗口核心区域为页面容器
     
     createRoleSelectionPage();
-    createLoginPage(true);  // Admin login
-    createLoginPage(false); // Customer login
+    createLoginPage(true);  // 管理员登录
+    createLoginPage(false); // 用户登录
     createRegisterPage();
     createAdminDashboard();
     createCustomerDashboard();
@@ -49,31 +49,31 @@ void MainWindow::setupUI() {
     createMyTicketsPage();  // 添加我的票务页面
 }
 
-// 用户选择页面
+// 用户选择页面，第一个页面
 void MainWindow::createRoleSelectionPage() {
     QWidget *page = new QWidget;
-    QVBoxLayout *layout = new QVBoxLayout(page);
+    QVBoxLayout *layout = new QVBoxLayout(page);    //设置垂直方向的布局管理器
 
     QLabel *titleLabel = new QLabel("欢迎光临模拟电影院售票系统");
-    titleLabel->setStyleSheet(titleLabelStyle);
+    titleLabel->setStyleSheet(titleLabelStyle); //设置标题样式
     
     titleLabel->setAlignment(Qt::AlignCenter);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(20);
-    titleLabel->setFont(titleFont);
+    titleLabel->setFont(titleFont); //设置字体大小
     
     // 创建按钮容器
     QWidget *buttonContainer = new QWidget;
     QVBoxLayout *buttonContainerLayout = new QVBoxLayout(buttonContainer);
 
-    QPushButton *adminBtn = new QPushButton("管理员登录");
+    QPushButton *adminBtn = new QPushButton("管理员登录");  //创建按钮控件实例
     QPushButton *customerBtn = new QPushButton("观众登录/注册");
     
     // 设置按钮固定大小
     adminBtn->setFixedSize(200, 60);
     customerBtn->setFixedSize(200, 60);
 
-    adminBtn->setStyleSheet(buttonStyle);
+    adminBtn->setStyleSheet(buttonStyle);   //设置风格
     customerBtn->setStyleSheet(buttonStyle);
 
     // 将按钮添加到容器布局
@@ -86,9 +86,9 @@ void MainWindow::createRoleSelectionPage() {
     layout->addWidget(titleLabel);
     layout->addSpacing(50);
     layout->addWidget(buttonContainer,0,Qt::AlignCenter);
-    layout->addStretch();
+    layout->addStretch();   //设置拉伸
     
-    connect(adminBtn, &QPushButton::clicked, this, &MainWindow::showAdminLogin);
+    connect(adminBtn, &QPushButton::clicked, this, &MainWindow::showAdminLogin);  //将按键实例和槽函数连接
     connect(customerBtn, &QPushButton::clicked, this, &MainWindow::showCustomerLogin);
     
     stackedWidget->addWidget(page);
@@ -112,7 +112,7 @@ void MainWindow::createLoginPage(bool isAdmin) {
     QVBoxLayout *formContainerLayout = new QVBoxLayout(formContainer);
     
     QFormLayout *formLayout = new QFormLayout;
-    QLineEdit *loginUsernameEdit = new QLineEdit;
+    QLineEdit *loginUsernameEdit = new QLineEdit;   //创建输入控件
     QLineEdit *loginPasswordEdit = new QLineEdit;
     loginPasswordEdit->setEchoMode(QLineEdit::Password);
 
@@ -128,10 +128,12 @@ void MainWindow::createLoginPage(bool isAdmin) {
     formLayout->setFormAlignment(Qt::AlignHCenter | Qt::AlignTop);
     formLayout->setLabelAlignment(Qt::AlignRight);
     
+    //创建按钮控件
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QPushButton *loginBtn = new QPushButton("登录");
     QPushButton *backBtn = new QPushButton("返回");
 
+    // 设置按钮样式
     loginBtn->setStyleSheet(buttonStyle);
     backBtn->setStyleSheet(buttonStyle);
 
@@ -161,12 +163,12 @@ void MainWindow::createLoginPage(bool isAdmin) {
     layout->addStretch();
     layout->addWidget(titleLabel);
     layout->addSpacing(30);
-    layout->addWidget(formContainer, 0, Qt::AlignCenter);  // 关键：让整个表单容器居中
+    layout->addWidget(formContainer, 0, Qt::AlignCenter);  // 让整个表单容器居中
     layout->addStretch();
     
     if (isAdmin) {
-        connect(loginBtn, &QPushButton::clicked, [this, loginUsernameEdit, loginPasswordEdit]() {
-            QString username = loginUsernameEdit->text();
+        connect(loginBtn, &QPushButton::clicked, [this, loginUsernameEdit, loginPasswordEdit]() {   //lambda写法，创建槽函数
+            QString username = loginUsernameEdit->text(); //获取输入框的文本内容
             QString password = loginPasswordEdit->text();
             
             User* user = DataManager::getInstance().loginUser(username, password);
@@ -403,7 +405,7 @@ void MainWindow::createCustomerDashboard() {
     stackedWidget->addWidget(page);
 }
 
-void MainWindow::createMyTicketsPage() {
+void MainWindow::createMyTicketsPage() {    //我的票务界面
     QWidget *page = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout(page);
     
@@ -492,20 +494,16 @@ void MainWindow::refreshMyTickets() {
             }
         }
     }
-    
-    // 只在第一次加载时设置表格属性，避免重复刷新导致的界面尺寸更改
-    static bool firstLoad = true;
-    if (firstLoad) {
         // 设置表格列宽自适应
         myTicketsTable->resizeColumnsToContents();
         myTicketsTable->horizontalHeader()->setStretchLastSection(true);
-        
+        myTicketsTable->setColumnWidth(5, 100);
+    
         // 设置固定行高，避免界面收缩
         for (int i = 0; i < myTicketsTable->rowCount(); ++i) {
-            myTicketsTable->setRowHeight(i, 63);  // 设置行高为63像素
+            myTicketsTable->setRowHeight(i, 65);  // 设置行高为65像素
         }
-        firstLoad = false;
-    }
+    
 }
 
 // 完善退票方法
@@ -527,7 +525,8 @@ void MainWindow::cancelTicket() {
     }
 }
 
-void MainWindow::createMovieManagementPage() {
+ //创建影片管理界面
+void MainWindow::createMovieManagementPage() { 
     QWidget *page = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout(page);
     
@@ -959,7 +958,7 @@ void MainWindow::onSeatSelected(bool checked) {
     }
 }
 
-// 页面切换方法
+// 页面切换方法,以下
 void MainWindow::showRoleSelection() {
     stackedWidget->setCurrentIndex(0);
 }
@@ -1005,6 +1004,7 @@ void MainWindow::showMovieManagement() {
     stackedWidget->setCurrentIndex(6);  // 假设这是第6个页面
 }
 
+//选票界面的座椅
 void MainWindow::showSeatSelection(int scheduleId) {
     currentScheduleId = scheduleId;
     Schedule* schedule = DataManager::getInstance().findSchedule(scheduleId);
@@ -1088,9 +1088,10 @@ void MainWindow::showSeatSelection(int scheduleId) {
     stackedWidget->setCurrentIndex(10);
 }
 
+//登出方法
 void MainWindow::logout() {
     currentUser = nullptr;
-    DataManager::getInstance().setCurrentUser(nullptr);
+    DataManager::getInstance().setCurrentUser(nullptr); //并非重复设置，而是两个不同的变量
     showRoleSelection();
 }
 
@@ -1117,6 +1118,7 @@ void MainWindow::refreshScheduleList() {
     }
 }
 
+//添加排片方法
 void MainWindow::addNewSchedule() {
     // 创建添加排片对话框
     QDialog dialog(this);
@@ -1171,6 +1173,7 @@ void MainWindow::addNewSchedule() {
     }
 }
 
+//编辑排片方法
 void MainWindow::editSchedule() {
      QList<QListWidgetItem*> selectedItems = scheduleList->selectedItems();
     if (selectedItems.isEmpty()) {
@@ -1246,6 +1249,7 @@ void MainWindow::editSchedule() {
     }
 }
 
+//删除排片
 void MainWindow::deleteSchedule() {
     QList<QListWidgetItem*> selectedItems = scheduleList->selectedItems();
     if (selectedItems.isEmpty()) {
@@ -1332,6 +1336,7 @@ void MainWindow::refreshCustomerMovieList() {
     }
 }
 
+//购买票的方法
 void MainWindow::purchaseTicket() {
     if (currentScheduleId == -1) {
         QMessageBox::warning(this, "购票失败", "请先选择排片");

@@ -5,6 +5,7 @@ CinemaHall::CinemaHall() : hallId(0), name(""), rows(0), cols(0) {}
 CinemaHall::CinemaHall(int hallId, const QString& name, int rows, int cols)
     : hallId(hallId), name(name), rows(rows), cols(cols) {}
 
+//属性的获取
 int CinemaHall::getHallId() const { return hallId; }
 QString CinemaHall::getName() const { return name; }
 int CinemaHall::getRows() const { return rows; }

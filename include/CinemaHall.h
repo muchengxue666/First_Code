@@ -4,7 +4,7 @@
 #include <QString>
 #include <vector>
 
-class CinemaHall {
+class CinemaHall {  //影厅类
 public:
     CinemaHall();
     CinemaHall(int hallId, const QString& name, int rows, int cols);

@@ -7,6 +7,7 @@ Movie::Movie(int id, const QString& title, const QString& director,
     : id(id), title(title), director(director), duration(duration), 
       genre(genre), price(price) {}
 
+//属性的获取
 int Movie::getId() const { return id; }
 QString Movie::getTitle() const { return title; }
 QString Movie::getDirector() const { return director; }

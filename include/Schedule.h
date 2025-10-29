@@ -34,7 +34,7 @@ private:
     int movieId;
     int hallId;
     QDateTime showTime;
-    std::vector<std::vector<bool>> seats; // true = occupied, false = available
+    std::vector<std::vector<bool>> seats; // true = occupied, false = available 两层容器表示座位
     double boxOffice;
 };
 
