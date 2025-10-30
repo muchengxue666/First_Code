@@ -624,7 +624,7 @@ void MainWindow::createScheduleManagementPage() {
 
 // 票房统计页面
 void MainWindow::createBoxOfficePage() {
-    QWidget *page = new QWidget;
+        QWidget *page = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout(page);
     
     QLabel *titleLabel = new QLabel("票房统计");
@@ -633,29 +633,40 @@ void MainWindow::createBoxOfficePage() {
     titleFont.setPointSize(16);
     titleLabel->setFont(titleFont);
     
-    // 添加刷新按钮
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    // 日期选择和刷新按钮
+    QHBoxLayout *dateLayout = new QHBoxLayout;
+    QLabel *dateLabel = new QLabel("选择日期:");
+    QDateEdit *dateEdit = new QDateEdit;
+    dateEdit->setDate(QDate::currentDate()); // 默认显示今天
+    dateEdit->setCalendarPopup(true);
     QPushButton *refreshBtn = new QPushButton("刷新");
     
-    // 设置按钮固定大小和样式
+    // 设置日期选择器和按钮样式
+    dateEdit->setFixedSize(150, 35);
     refreshBtn->setFixedSize(120, 40);
     refreshBtn->setStyleSheet(buttonStyle);
     
-    buttonLayout->addWidget(refreshBtn);
-    buttonLayout->addStretch();
+    dateLayout->addWidget(dateLabel);
+    dateLayout->addWidget(dateEdit);
+    dateLayout->addWidget(refreshBtn);
+    dateLayout->addStretch();
     
     // 票房表格
-    QTableWidget *boxOfficeTable = new QTableWidget;
-    boxOfficeTable->setColumnCount(3);
-    boxOfficeTable->setHorizontalHeaderLabels({"电影名称", "总票房收入(元)", "排名"});
+    QTableWidget *boxOfficeTable = new QTableWidget(0, 3);
+    boxOfficeTable->setHorizontalHeaderLabels(QStringList() << "电影名称" << "票房收入" << "排名");
+    boxOfficeTable->setAlternatingRowColors(true);
+    boxOfficeTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    boxOfficeTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     boxOfficeTable->setStyleSheet(tableWidgetStyle);
-    
-    // 立即设置表头自适应拉伸
     boxOfficeTable->resizeColumnsToContents();
+
+    // 操作按钮
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    buttonLayout->setAlignment(Qt::AlignCenter);
     
     // 页面创建时自动加载数据
-    auto loadBoxOfficeData = [this, boxOfficeTable]() {
-        auto stats = DataManager::getInstance().getTotalBoxOfficeStats();
+    auto loadBoxOfficeData = [this, boxOfficeTable, dateEdit]() {
+        auto stats = DataManager::getInstance().getBoxOfficeStats(dateEdit->date());
         
         boxOfficeTable->setRowCount(stats.size());
         for (int i = 0; i < stats.size(); ++i) {
@@ -678,6 +689,7 @@ void MainWindow::createBoxOfficePage() {
     backBtn->setStyleSheet(buttonStyle);
     
     layout->addWidget(titleLabel);
+    layout->addLayout(dateLayout);
     layout->addLayout(buttonLayout);
     layout->addWidget(boxOfficeTable);
     layout->addWidget(backBtn);
@@ -1290,6 +1302,7 @@ void MainWindow::refreshCustomerMovieList() {
             // 简化按钮创建，直接设置到单元格
             QPushButton *bookBtn = new QPushButton("选座购票");
             bookBtn->setProperty("scheduleId", schedule.getScheduleId());
+            bookBtn->setFixedSize(120,40);
             bookBtn->setStyleSheet(
                 "QPushButton {"
                 "    background-color: #2c3e50;"
@@ -1321,7 +1334,7 @@ void MainWindow::refreshCustomerMovieList() {
     }
     
     // 设置表格列宽自适应
-    movieTable->resizeColumnsToContents();
+    //movieTable->resizeColumnsToContents();
     movieTable->horizontalHeader()->setStretchLastSection(true);
     
     // 设置行高，确保按钮有足够的空间
@@ -1407,3 +1420,7 @@ void MainWindow::purchaseTicket() {
     
     showMovieList();
 }
+
+
+
+
