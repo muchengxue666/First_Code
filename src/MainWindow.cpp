@@ -782,13 +782,13 @@ void MainWindow::addNewMovie() {
     formLayout->addRow("时长:", durationEdit);
     formLayout->addRow("票价:", priceSpinBox);
     
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel); //标准对话框按钮容器
     formLayout->addRow(buttonBox);
     
     connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
     
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted) {   //阻塞
         QString title = titleEdit->text();
         QString director = directorEdit->text();
         QString genre = genreEdit->text();

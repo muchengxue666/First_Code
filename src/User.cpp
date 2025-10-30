@@ -9,7 +9,7 @@ User::User(const QString& username, const QString& password, UserRole role)
 QString User::getUsername() const { return username; }
 QString User::getPassword() const { return password; }
 UserRole User::getRole() const { return role; }
-
+//密码的验证
 bool User::validatePassword(const QString& password) const {
     return this->password == password;
 }
