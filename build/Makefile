@@ -154,6 +154,30 @@ cinema_system_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system_autogen.dir\build.make CMakeFiles/cinema_system_autogen.dir/build
 .PHONY : cinema_system_autogen/fast
 
+cinema_system_autogen/EWIEGA46WW/qrc_resources.obj: cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj
+.PHONY : cinema_system_autogen/EWIEGA46WW/qrc_resources.obj
+
+# target to build an object file
+cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj
+.PHONY : cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj
+
+cinema_system_autogen/EWIEGA46WW/qrc_resources.i: cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.i
+.PHONY : cinema_system_autogen/EWIEGA46WW/qrc_resources.i
+
+# target to preprocess a source file
+cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.i
+.PHONY : cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.i
+
+cinema_system_autogen/EWIEGA46WW/qrc_resources.s: cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.s
+.PHONY : cinema_system_autogen/EWIEGA46WW/qrc_resources.s
+
+# target to generate assembly for a file
+cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.s
+.PHONY : cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.s
+
 cinema_system_autogen/mocs_compilation.obj: cinema_system_autogen/mocs_compilation.cpp.obj
 .PHONY : cinema_system_autogen/mocs_compilation.obj
 
@@ -381,6 +405,9 @@ help:
 	@echo ... cinema_system_autogen
 	@echo ... cinema_system_autogen_timestamp_deps
 	@echo ... cinema_system
+	@echo ... cinema_system_autogen/EWIEGA46WW/qrc_resources.obj
+	@echo ... cinema_system_autogen/EWIEGA46WW/qrc_resources.i
+	@echo ... cinema_system_autogen/EWIEGA46WW/qrc_resources.s
 	@echo ... cinema_system_autogen/mocs_compilation.obj
 	@echo ... cinema_system_autogen/mocs_compilation.i
 	@echo ... cinema_system_autogen/mocs_compilation.s

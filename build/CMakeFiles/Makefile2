@@ -87,12 +87,12 @@ CMakeFiles/cinema_system.dir/all: CMakeFiles/cinema_system_autogen_timestamp_dep
 CMakeFiles/cinema_system.dir/all: CMakeFiles/cinema_system_autogen.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target cinema_system"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Built target cinema_system"
 .PHONY : CMakeFiles/cinema_system.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/cinema_system.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\Code_Projects\build\CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\Code_Projects\build\CMakeFiles 14
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/cinema_system.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start E:\Code_Projects\build\CMakeFiles 0
 .PHONY : CMakeFiles/cinema_system.dir/rule
@@ -104,7 +104,7 @@ cinema_system: CMakeFiles/cinema_system.dir/rule
 # codegen rule for target.
 CMakeFiles/cinema_system.dir/codegen: CMakeFiles/cinema_system_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system.dir\build.make CMakeFiles/cinema_system.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Finished codegen for target cinema_system"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Finished codegen for target cinema_system"
 .PHONY : CMakeFiles/cinema_system.dir/codegen
 
 # clean rule for target.
@@ -151,7 +151,7 @@ CMakeFiles/cinema_system_autogen_timestamp_deps.dir/clean:
 CMakeFiles/cinema_system_autogen.dir/all: CMakeFiles/cinema_system_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system_autogen.dir\build.make CMakeFiles/cinema_system_autogen.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system_autogen.dir\build.make CMakeFiles/cinema_system_autogen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=12 "Built target cinema_system_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=14 "Built target cinema_system_autogen"
 .PHONY : CMakeFiles/cinema_system_autogen.dir/all
 
 # Build rule for subdir invocation for target.
@@ -168,7 +168,7 @@ cinema_system_autogen: CMakeFiles/cinema_system_autogen.dir/rule
 # codegen rule for target.
 CMakeFiles/cinema_system_autogen.dir/codegen: CMakeFiles/cinema_system_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cinema_system_autogen.dir\build.make CMakeFiles/cinema_system_autogen.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=12 "Finished codegen for target cinema_system_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\Code_Projects\build\CMakeFiles --progress-num=14 "Finished codegen for target cinema_system_autogen"
 .PHONY : CMakeFiles/cinema_system_autogen.dir/codegen
 
 # clean rule for target.

@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "" "cinema_system_autogen/timestamp" "custom" "cinema_system_autogen/deps"
+  "E:/Code_Projects/build/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp" "CMakeFiles/cinema_system.dir/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj" "gcc" "CMakeFiles/cinema_system.dir/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj.d"
   "E:/Code_Projects/build/cinema_system_autogen/mocs_compilation.cpp" "CMakeFiles/cinema_system.dir/cinema_system_autogen/mocs_compilation.cpp.obj" "gcc" "CMakeFiles/cinema_system.dir/cinema_system_autogen/mocs_compilation.cpp.obj.d"
   "E:/Code_Projects/src/CinemaHall.cpp" "CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj" "gcc" "CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj.d"
   "E:/Code_Projects/src/DataManager.cpp" "CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj" "gcc" "CMakeFiles/cinema_system.dir/src/DataManager.cpp.obj.d"

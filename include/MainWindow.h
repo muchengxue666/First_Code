@@ -92,13 +92,14 @@ private:
     QVector<QPushButton*> seatButtons;
     
     //以下是css格式的表，用来加载不同风格
+    //按键样式
     QString buttonStyle = 
         "QPushButton {"
     "    background-color: #2c3e50;"
     "    color: white;"
     "    border: 2px solid #34495e;"
     "    border-radius: 8px;"
-    "    font-size: 14px;"
+    "    font-size: 16px;"
     "    font-weight: bold;"
     "    padding: 8px 16px;"
     "    min-width: 80px;"

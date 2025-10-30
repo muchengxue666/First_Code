@@ -54,17 +54,15 @@ void MainWindow::createRoleSelectionPage() {
     QWidget *page = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout(page);    //设置垂直方向的布局管理器
 
+    page->setStyleSheet("background-image: url(:/images/images/cinema_background.jpg); background-position: center; background-repeat: no-repeat; background-size: cover;");
+    
     QLabel *titleLabel = new QLabel("欢迎光临模拟电影院售票系统");
-    titleLabel->setStyleSheet(titleLabelStyle); //设置标题样式
+    titleLabel->setStyleSheet("QLabel { color: white; font-size: 20px; font-weight: bold; background-color: rgba(0, 0, 0, 80); padding: 15px; border-radius: 8px; border: none; }");
     
     titleLabel->setAlignment(Qt::AlignCenter);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(20);
     titleLabel->setFont(titleFont); //设置字体大小
-    
-    // 创建按钮容器
-    QWidget *buttonContainer = new QWidget;
-    QVBoxLayout *buttonContainerLayout = new QVBoxLayout(buttonContainer);
 
     QPushButton *adminBtn = new QPushButton("管理员登录");  //创建按钮控件实例
     QPushButton *customerBtn = new QPushButton("观众登录/注册");
@@ -76,17 +74,13 @@ void MainWindow::createRoleSelectionPage() {
     adminBtn->setStyleSheet(buttonStyle);   //设置风格
     customerBtn->setStyleSheet(buttonStyle);
 
-    // 将按钮添加到容器布局
-    buttonContainerLayout->addWidget(adminBtn);
-    buttonContainerLayout->addSpacing(20);  // 按钮间距
-    buttonContainerLayout->addWidget(customerBtn);
-    buttonContainerLayout->setAlignment(Qt::AlignCenter);
-
     layout->addStretch();
     layout->addWidget(titleLabel);
     layout->addSpacing(50);
-    layout->addWidget(buttonContainer,0,Qt::AlignCenter);
-    layout->addStretch();   //设置拉伸
+    layout->addWidget(adminBtn, 0, Qt::AlignCenter);
+    layout->addSpacing(20);  // 按钮间距
+    layout->addWidget(customerBtn, 0, Qt::AlignCenter);
+    layout->addStretch();
     
     connect(adminBtn, &QPushButton::clicked, this, &MainWindow::showAdminLogin);  //将按键实例和槽函数连接
     connect(customerBtn, &QPushButton::clicked, this, &MainWindow::showCustomerLogin);
@@ -442,7 +436,7 @@ void MainWindow::showMyTickets() {
     stackedWidget->setCurrentIndex(11);  // 我的票务页面
 }
 
-// 添加刷新我的票务方法
+// 添加刷新我的票务方法,动态刷新退票按钮
 void MainWindow::refreshMyTickets() {
     if (!currentUser) {
         QMessageBox::warning(this, "错误", "请先登录");
@@ -766,7 +760,7 @@ void MainWindow::refreshMovieList() {
 // 添加新增电影方法
 void MainWindow::addNewMovie() {
     // 创建添加电影对话框
-    QDialog dialog(this);
+    QDialog dialog(this);   //父对象
     dialog.setWindowTitle("新增电影");
     
     QFormLayout *formLayout = new QFormLayout(&dialog);

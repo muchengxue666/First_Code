@@ -144,6 +144,7 @@ cinema_system_autogen/timestamp: \
 	E:/Code_Projects/include/Schedule.h \
 	E:/Code_Projects/include/Ticket.h \
 	E:/Code_Projects/include/User.h \
+	E:/Code_Projects/resources.qrc \
 	E:/Code_Projects/src/CinemaHall.cpp \
 	E:/Code_Projects/src/DataManager.cpp \
 	E:/Code_Projects/src/MainWindow.cpp \

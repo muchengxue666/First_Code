@@ -556,7 +556,7 @@ QDataStream &operator>>(QDataStream &in, CinemaHall &hall) {
     return in;
 }
 
-QDataStream <DataManager*>(this)<<(QDataStream &out, const Schedule &schedule) {
+QDataStream &operator<<(QDataStream &out, const Schedule &schedule) {
     out << schedule.getScheduleId() << schedule.getMovieId() << schedule.getHallId() 
         << schedule.getShowTime() << schedule.getBoxOffice();
     

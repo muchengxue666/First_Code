@@ -43,7 +43,7 @@ bool Schedule::bookSeat(int row, int col) {
         return false;
     }
     if (seats[row][col]) {
-        return false; // Seat already occupied
+        return false; //座位已满
     }
     seats[row][col] = true;
     return true;
@@ -54,7 +54,7 @@ bool Schedule::cancelSeat(int row, int col) {
         return false;
     }
     if (!seats[row][col]) {
-        return false; // Seat not occupied
+        return false; // 座位未满
     }
     seats[row][col] = false;
     return true;

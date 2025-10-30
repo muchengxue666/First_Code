@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/cinema_system.dir/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj"
+  "CMakeFiles/cinema_system.dir/cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp.obj.d"
   "CMakeFiles/cinema_system.dir/cinema_system_autogen/mocs_compilation.cpp.obj"
   "CMakeFiles/cinema_system.dir/cinema_system_autogen/mocs_compilation.cpp.obj.d"
   "CMakeFiles/cinema_system.dir/src/CinemaHall.cpp.obj"
@@ -23,6 +25,7 @@ file(REMOVE_RECURSE
   "cinema_system.exe"
   "cinema_system.exe.manifest"
   "cinema_system.pdb"
+  "cinema_system_autogen/EWIEGA46WW/qrc_resources.cpp"
   "cinema_system_autogen/mocs_compilation.cpp"
   "cinema_system_autogen/timestamp"
   "libcinema_system.dll.a"

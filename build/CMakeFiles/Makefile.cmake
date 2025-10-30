@@ -59,6 +59,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/4.2.0-rc1/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.2.0-rc1/CMakeRCCompiler.cmake"
   "CMakeFiles/4.2.0-rc1/CMakeSystem.cmake"
+  "E:/Code_Projects/resources.qrc"
   "E:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/FindWrapAtomic.cmake"
   "E:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/FindWrapVulkanHeaders.cmake"
   "E:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/Qt6Config.cmake"
@@ -243,6 +244,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/cinema_system_autogen.dir/AutogenInfo.json"
+  "CMakeFiles/cinema_system_autogen.dir/AutoRcc_resources_EWIEGA46WW_Info.json"
   ".qt/QtDeploySupport.cmake"
   ".qt/QtDeployTargets.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
